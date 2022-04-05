@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const WalkSchema = new mongoose.Schema({
-    walkName: {
+    ideaName: {
         type: String,
         minlength: [3, "Author name must be at least 3 characters long"],
         required: [true, "Must enter name"],
     },
-    walkType: {
+    ideaType: {
     type: String,
     required: [true, "Must choose a type"],
     enum:[
@@ -13,18 +13,18 @@ const WalkSchema = new mongoose.Schema({
         "Cat",
 ]
     },
-    walkGender: String,
-    walkAge: Number,
-    walkImage: String,
-    walkDesc: {
+    ideaGender: String,
+    ideaAge: Number,
+    ideaImage: String,
+    ideaDesc: {
         type: String,
         minlength: [3, "Description must be at least 3 characters long"],
         required: [true, "Must be longer than 3 characters"]
     },
-    walkSkillOne: String,
-    walkSkillTwo: String,
-    walkSkillThree: String,
-    walkLike: Number,
+    ideaSkillOne: String,
+    ideaSkillTwo: String,
+    ideaSkillThree: String,
+    ideaLike: Number,
 
 }, { timestamps: true });
 

@@ -1,4 +1,4 @@
-const Walk = require('../models/walkstars.model');
+const Walk = require('../models/idea.model');
 
 const createWalk = (req, res) => {
     Walk.create(req.body)
