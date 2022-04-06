@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-
 const bcrypt = require("bcrypt")
 
 const UserSchema = new mongoose.Schema ({
@@ -33,7 +32,7 @@ UserSchema.pre("validate", function(next) {
 })
 
 UserSchema.pre("save", function(next) {
-    console.log("pre saving")
+    console.log("saving")
     bcrypt.hash(this.userPassword, 10)
     .then((cryptedPassword) => {
         this.userPassword = cryptedPassword;
