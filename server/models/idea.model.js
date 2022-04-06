@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const WalkSchema = new mongoose.Schema({
+const IdeaSchema = new mongoose.Schema({
     ideaName: {
         type: String,
         minlength: [3, "Author name must be at least 3 characters long"],
@@ -21,12 +21,15 @@ const WalkSchema = new mongoose.Schema({
         minlength: [3, "Description must be at least 3 characters long"],
         required: [true, "Must be longer than 3 characters"]
     },
-    ideaSkillOne: String,
-    ideaSkillTwo: String,
-    ideaSkillThree: String,
     ideaLike: Number,
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('Walk', WalkSchema);
+
+
+module.exports = mongoose.model('Idea', IdeaSchema);
 

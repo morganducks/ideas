@@ -1,9 +1,11 @@
-const WalkController = require('../controllers/idea.controller');  
+const IdeaController = require('../controllers/idea.controller');  
 
 module.exports = (app) => {
-    app.post('/api/ideas', WalkController.createWalk); 
-    app.get('/api/ideas', WalkController.viewWalks); 
-    app.get('/api/ideas/:id', WalkController.viewOneWalk); 
-    app.delete('/api/ideas/:id', WalkController.deleteWalk); 
-    app.put('/api/ideas/:id', WalkController.updateWalk);
+    app.post('/api/ideas', IdeaController.createIdea); 
+    app.get('/api/ideas', IdeaController.viewIdeas); 
+    app.get('/api/ideas/:id', IdeaController.viewOneIdea); 
+    app.delete('/api/ideas/:id', IdeaController.deleteIdea); 
+    app.put('/api/ideas/:id', IdeaController.updateIdea);
+    app.delete('/api/ideas/:id', IdeaController.deleteIdea); 
+    app.put('/api/ideas/:id', IdeaController.updateIdea);
 }

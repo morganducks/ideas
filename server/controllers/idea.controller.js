@@ -1,57 +1,69 @@
-const Walk = require('../models/idea.model');
+const jwt = require("jsonwebtoken");
+const Idea = require('../models/idea.model');
 
-const createWalk = (req, res) => {
-    Walk.create(req.body)
-        .then((createWalk) => {
-            res.json(createWalk);
+const createIdea = (req, res) => {
+
+    const newIdeaObject = new Idea(req.body)
+
+    const decodeJWT = jwt.decode(req.cookies.userToken, {
+        complete: true
+    })
+
+    newIdeaObject.createdBy = decodeJWT.payload.id;
+
+     Idea.create(req.body)
+        .then((createIdea) => {
+            res.json(createIdea);
             console.log("You created a pet!")
         })
         .catch((err) => {
             console.log(err);
             res.status(400).json(err);
-            console.log('Something went wrong during createWalk');
+            console.log('Something went wrong during createIdea');
         })
 }
 
-const viewWalks = (req, res) => {
-    Walk.find({})
-        .then((viewWalks) => {
-            res.json(viewWalks)
-            console.log("You found the pets")
+const viewIdeas = (req, res) => {
+
+    Idea.find({})
+    .populate("createdBy", "userName userEmail" )
+        .then((viewIdeas) => {
+            res.json(viewIdeas)
+            console.log("All great ideas!")
         })
         .catch((err) => {
             res.json(err)
-            console.log("Something went wrong with view pets")
+            console.log("Something went wrong getting all ideas")
         });
 }
 
-const viewOneWalk = (req, res) => {
-    Walk.findOne({ _id: req.params.id })
-        .then(viewOneWalk => res.json(viewOneWalk))
+const viewOneIdea = (req, res) => {
+    Idea.findOne({ _id: req.params.id })
+        .then(viewOneIdea => res.json(viewOneIdea))
         .catch(err => res.json(err));
 }
 
-const updateWalk = (req, res) => {
+const updateIdea = (req, res) => {
     console.log("editing...")
-    Walk.findOneAndUpdate({ _id: req.params.id },
+    Idea.findOneAndUpdate({ _id: req.params.id },
         req.body,
         { new: true, runValidators: true })
-        .then((updateWalk) => {
-            res.json(updateWalk);
-            console.log(updateWalk);
+        .then((updateIdea) => {
+            res.json(updateIdea);
+            console.log(updateIdea);
             console.log("Successfully updated pet")
         })
         .catch((err) => {
-            console.log('Something went wrong during updateWalk');
+            console.log('Something went wrong during updateIdea');
             console.log(err);
             res.status(400).json(err);
         })
 }
 
-const deleteWalk = (req, res) => {
-    Walk.deleteOne({ _id: req.params.id })
-    .then((deletedWalk) => {
-        res.json(deletedWalk)
+const deleteIdea = (req, res) => {
+    Idea.deleteOne({ _id: req.params.id })
+    .then((deletedIdea) => {
+        res.json(deletedIdea)
         console.log("Successfully deleted pet")
     })
         .catch((err) => {
@@ -61,9 +73,9 @@ const deleteWalk = (req, res) => {
     }
 
 module.exports = {
-    viewWalks,
-    createWalk,
-    viewOneWalk,
-    updateWalk,
-    deleteWalk,
+    viewIdeas,
+    createIdea,
+    viewOneIdea,
+    updateIdea,
+    deleteIdea,
 }
