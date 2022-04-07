@@ -5,27 +5,34 @@ const UserSchema = new mongoose.Schema ({
 
 userName: {
     type: String,
-    required: [true, "Unsername is required"]
+    // required: [true, "Unsername is required"],
+    // minlength: [3, "Username name must be at least 3 characters long"],
 },
 userPassword: {
     type: String,
-    required: [true, "Password is required"]
+    // required: [true, "Password is required"],
+    // minlength: [8, "Password name must be at least 8 characters long"],
 },
 userEmail: {
     type: String,
-    required: [true, "Email is required"]
+    // trim: true,
+    // lowercase: true,
+    // unique: true,
+    // required: 'Email address is required',
+    // validate: [validateEmail, 'Please fill a valid email address'],
+    // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
 },
 }, { timestamps: true });
 
 
 
-UserSchema.virtual("confirmPassword")
-.get(()=> this._confirmPassword)
-.set((value) => this._confirmPassword = value)
+UserSchema.virtual("confirmUserPassword")
+.get(()=> this._confirmUserPassword)
+.set((value) => this._confirmUserPassword = value)
 
 UserSchema.pre("validate", function(next) {
-    if(this.userPassword !== this.confirmPassword) {
-        this.invalidate("confirmPassword", "Passwords much match")
+    if(this.userPassword !== this.confirmUserPassword) {
+        this.invalidate("confirmUserPassword", "Passwords much match")
         console.log("Passwords do not match")
     } 
     next()

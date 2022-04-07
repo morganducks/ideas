@@ -5,7 +5,7 @@ module.exports = {
 
 viewIdeas: (req, res) => {
     Idea.find()
-    .populate("createdBy", "userName userEmail" )
+    .populate("createdBy", "userName userEmail")
         .then((viewIdeas) => {
             res.json(viewIdeas)
             console.log("All great ideas!")

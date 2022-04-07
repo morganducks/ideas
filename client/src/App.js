@@ -1,24 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useState} from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import IdeasListAll from "./components/IdeasListAll"
+import IdeasListOne from "./components/IdeasListOne"
+import IdeasAdd from "./components/IdeasAdd"
+import IdeasUpdate from "./components/IdeasUpdate"
+import Profile from "./components/Profile"
+import LogReg from "./views/LogReg"
 
 function App() {
+
+  // const [allIdeas, getAllIdeas] = useState[""];
+  // const[user,setUser] = useState[""];
+
   return (
+    <BrowserRouter>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+<Routes>
+    <Route element={<LogReg />} path="/" />
+    <Route element={<Profile />} path="/profile" />
+    <Route element={<IdeasListAll />} path="/home" />
+    <Route element={<Profile />} path="/user/ideasbyuser/:userName" />
+
+
+</Routes>
     </div>
+    </BrowserRouter>
+  
+  
+  
   );
 }
 
