@@ -11,7 +11,7 @@ const IdeasListAll = (props) => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
     const { id } = useParams();
-    const {likes,setLikes} = useState([])
+    const [likes,setLikes] = useState([])
     
    
 

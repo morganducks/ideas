@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from "react";
 import  {useParams} from "react-router-dom";
 import axios from "axios";
-import IdeasAdd from "../components/IdeasAdd"
 
 
 
 const Profile = (props)=>{
 
     const {userName} = useParams();
-    const [ userList, setUserList ]  = useState([]);
 
+    // const [ allIdeas, setAllIdeas ] = useState([]);
+    const [ userList, setUserList ]  = useState([]);
 
 
     useEffect(()=>{
@@ -27,19 +27,15 @@ const Profile = (props)=>{
     }, [userName])
 
 
-
 return(
 <div>
     Profile
     {userName}
 
-    <IdeasAdd />
-
         {
         userList.map((ideas,index) => (
             <div key={index}>
                 <p>{ideas.ideaName}</p>
-                <p>{ideas.createdAt}</p>
                 </div>
         )
         )

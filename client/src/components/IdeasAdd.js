@@ -45,7 +45,7 @@ return(
                         </div>
                         <div className="ideasRow">
                             <h3></h3>
-                            <input value={ideaName} type="text" name="Name" placeholder="Enter your idea here" onChange={(e) => setIdeaName(e.target.value)}
+                            <input value={ideaName} type="text" name="Name" placeholder="Enter your idea" onChange={(e) => setIdeaName(e.target.value)}
                             />
                             {/* <br />
                             {
