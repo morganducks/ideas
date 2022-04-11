@@ -54,6 +54,7 @@ findIdeasByUser: (req, res) => {
         .catch((err) => {
             console.log(err)
             res.status(400).json(err)
+            console.log("test")
         })
     }  else {
         console.log("user")
@@ -64,14 +65,60 @@ findIdeasByUser: (req, res) => {
             .then((allIdeasFromUser) => {
                 console.log(allIdeasFromUser)
                 res.json(allIdeasFromUser)
+                console.log("all ideas?")
             })
         .catch((err) => {
             console.log(err)
             res.status(400).json(err)
         })
     }
-}
+},
+
+getLoggedInUser: (req, res)=>{
+
+    // const decodedJWT = jwt.decode(req.cookies.usertoken,{
+    //     complete: true
+    // })
+
+    User.findOne({_id: req.jwtpayload.id})
+        .then((user)=>{
+            console.log(user);
+            res.json(user)
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+
+},
 
 
+deleteIdea: (req, res) => {
+    Idea.deleteOne({ _id: req.params.id })
+    .then((deletedIdea) => {
+        res.json(deletedIdea)
+        console.log("Successfully deleted pet")
+    })
+        .catch((err) => {
+            res.json(err)
+            console.log("Did not Delete pet")
+        })
+    },
+
+    updateIdea: (req, res) => {
+        Idea.findOneAndUpdate({ _id: req.params.id },
+            req.body,
+            // { new: true, runValidators: true }
+            )
+            .then((updateIdea) => {
+                res.json(updateIdea);
+                console.log(updateIdea);
+                console.log("Successfully updated pet")
+            })
+            .catch((err) => {
+                console.log('Something went wrong during updateIdea');
+                console.log(err);
+                res.status(400).json(err);
+            })
+        }
 
 }

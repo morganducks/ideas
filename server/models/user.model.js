@@ -5,20 +5,20 @@ const UserSchema = new mongoose.Schema ({
 
 userName: {
     type: String,
-    // required: [true, "Unsername is required"],
-    // minlength: [3, "Username name must be at least 3 characters long"],
+    required: [true, "Unsername is required"],
+    minlength: [3, "Username name must be at least 3 characters long"],
 },
 userPassword: {
     type: String,
-    // required: [true, "Password is required"],
-    // minlength: [8, "Password name must be at least 8 characters long"],
+    required: [true, "Password is required"],
+    minlength: [8, "Password name must be at least 8 characters long"],
 },
 userEmail: {
     type: String,
-    // trim: true,
-    // lowercase: true,
-    // unique: true,
-    // required: 'Email address is required',
+    trim: true,
+    lowercase: true,
+    unique: true,
+    required: 'Email address is required',
     // validate: [validateEmail, 'Please fill a valid email address'],
     // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
 },
