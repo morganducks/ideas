@@ -65,13 +65,18 @@ const Register = (props) => {
                 />
                 </div>
                 <div>
-                <label>Username</label>
+                <label>Password</label>
                                 <input type="text" name="userPassword" value={user.userPassword}
                     onChange={changeHandler}
                 />
                 </div>
                 <div>
-                <label>Username</label>
+                <label>Confirm Password</label>
+                {errors.confirmUserPassword ? (
+                        <span className="">
+                            {errors.user.message}
+                        </span>
+                    ) : null}
                                 <input type="text" name="confirmUserPassword" value={user.confirmUserPassword}
                     onChange={changeHandler}
                 />

@@ -22,6 +22,7 @@ module.exports = {
             .catch((err) => {
                 res.status(400).json(err);
                 console.log("Register not successful")
+                // res.json({ message: "Password must be at least 8 characters", error: err })
             })
     },
 
@@ -85,14 +86,25 @@ module.exports = {
         //     complete: true,
         // })
         User.findOne({_id: req.jwtPayload.id})
-        .then((user)=> {
-            console.log(user)
-            res.json(user)
+        .then((loggedInUser)=> {
+            console.log(loggedInUser)
+            res.json(loggedInUser)
         })
         .catch((err)=>{
             console.log(err);
         })
-    }
+    },
+
+    findUsers: (req, res) => {
+        User.find()
+            .then((allUsers) => {
+                res.json(allUsers);
+            })
+            .catch((err) => {
+                console.log("Find All Users failed");
+                res.json({ message: "Something went wrong in findAll", error: err })
+            })
+    },
 
 
 

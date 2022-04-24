@@ -10,13 +10,9 @@ const IdeaSchema = new mongoose.Schema({
         ref: "User"
     },
 
-    postLike: {
+    liked: {
         type: Number,
-        // jimbo like want to like add his user to array array.length (+1 the output) will show accumulated like 
     },
-
-    countLikes: [{type: String}],
-
 
 }, { timestamps: true });
 

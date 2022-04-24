@@ -1,56 +1,47 @@
 import React, {useState, useEffect} from "react";
-import  {useParams} from "react-router-dom";
+// import {useParams} from "react-router-dom";
 import axios from "axios";
 
 
 
 const Likes = (props)=> {
 
-    const {likes,setLikes} = props;
+    const { likedPosts,setLikedPosts } = props;
     const { allIdeas, setAllIdeas } = props;
-
-
-const likeHandler = (ideaid) => {
-    let idea;
-
-    allIdeas.forEach(result => {
-        if (result._id === ideaid) {
-            idea = result;
-        }
-    })
-    console.log(idea)
-    if(idea.countLikes[0] === null) {
-        idea.countLikes.shift();
-    }
-
+    const { userName } = props;
     
-    idea.countLikes.push("1234")
-        axios.put(`http://localhost:8000/api/ideas/${ideaid}`,
-            {
-                countLikes: idea.countLikes
-                
-            })
-            .then(() => {
-                console.log(idea.countLikes.length)
-                setLikes(idea.countLikes.length)
-            })
-            .catch((err) => {
-                console.log(err)
-            });
+  const [isLiked, updateLike] = useState(false);
 
-    }
+
+    const likeHandler = () => {
+        let currentLikedPosts = props.likedPosts;
+        if (!isLiked) {
+          updateLike(true);
+          if (!currentLikedPosts.includes(userName))
+            props.updateLikedPosts(
+              [...currentLikedPosts, userName]
+            );
+        } else {
+          updateLike(false);
+          if (currentLikedPosts.includes(userName))
+            props.updateLikedPosts(
+              currentLikedPosts
+              .filter(user => user !== userName)
+              );
+        }
+      };
 
     return(
 <div>
-    {
-allIdeas.map((ideas, index) => {
-    <div className="listContainerHome" key={ideas._id}>
-<button className="mainButton likeButton" onClick={(e) => likeHandler(ideas._id)}>Give some love</button>
-<h3>has {ideas.countLikes.length} likes</h3>
-</div>
 
- } ) }
-    </div>
-    )}
+
+<button className="mainButton likeButton" onClick={likeHandler}>Give some love</button>
+<h3>has  likes</h3>
+
+
+ </div>
+ ) 
+ }
+    
 
 export default Likes;

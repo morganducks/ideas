@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Idea = require('../models/idea.model');
+const User = require('../models/user.model')
 
 module.exports = {
 
@@ -42,6 +43,7 @@ findIdeasByUser: (req, res) => {
     //confirm user is logged in
     if(req.jwtPayload.userName !==  req.params.userName){
         console.log("invalid user")
+        
         User.findOne({userName: req.params.userName})
         .then((userNotLoggedIn)=> {
             Idea.find({createdBy: userNotLoggedIn._id})
@@ -62,9 +64,9 @@ findIdeasByUser: (req, res) => {
         
         Idea.find({createdBy: req.jwtPayload.id})
             .populate("createdBy", "userName")
-            .then((allIdeasFromUser) => {
-                console.log(allIdeasFromUser)
-                res.json(allIdeasFromUser)
+            .then((allIdeasFromLoggedUser) => {
+                console.log(allIdeasFromLoggedUser)
+                res.json(allIdeasFromLoggedUser)
                 console.log("all ideas?")
             })
         .catch((err) => {
@@ -72,23 +74,6 @@ findIdeasByUser: (req, res) => {
             res.status(400).json(err)
         })
     }
-},
-
-getLoggedInUser: (req, res)=>{
-
-    // const decodedJWT = jwt.decode(req.cookies.usertoken,{
-    //     complete: true
-    // })
-
-    User.findOne({_id: req.jwtpayload.id})
-        .then((user)=>{
-            console.log(user);
-            res.json(user)
-        })
-        .catch((err)=>{
-            console.log(err);
-        })
-
 },
 
 

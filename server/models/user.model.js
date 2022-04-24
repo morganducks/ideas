@@ -34,6 +34,7 @@ UserSchema.pre("validate", function(next) {
     if(this.userPassword !== this.confirmUserPassword) {
         this.invalidate("confirmUserPassword", "Passwords much match")
         console.log("Passwords do not match")
+        alert("password must be at least 8 characters")
     } 
     next()
 })
