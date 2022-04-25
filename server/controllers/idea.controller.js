@@ -6,7 +6,7 @@ module.exports = {
 
 viewIdeas: (req, res) => {
     Idea.find()
-    .populate("createdBy", "userName userEmail")
+    .populate("replies", "content _id")
         .then((viewIdeas) => {
             res.json(viewIdeas)
             console.log("All great ideas!")
@@ -104,6 +104,19 @@ deleteIdea: (req, res) => {
                 console.log(err);
                 res.status(400).json(err);
             })
-        }
+        },
+
+        oneIdea: (req, res) => {   
+        Idea.findOne({ _id: req.params.id })
+        .populate("createdBy", "userName userEmail")
+            .then((viewIdeas) => {
+                res.json(viewIdeas)
+                console.log("All great ideas!")
+            })
+            .catch((err) => {
+                res.json(err)
+                console.log("Something went wrong getting all ideas")
+            });
+    },
 
 }

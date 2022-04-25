@@ -36,8 +36,8 @@ module.exports = {
                         useFindAndModify: true
                     })
                     .populate("replies", "content _id")
-                    .then((movieToUpdate)=>{
-                        console.log(movieToUpdate);
+                    .then((replyToUpdate)=>{
+                        console.log(replyToUpdate);
                         res.json(replyPosted)
                     })
                     .catch((err)=>{

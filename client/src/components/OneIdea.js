@@ -1,44 +1,43 @@
 //axios, useEffect, useState, Link
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom"
 
 
 
-const OneMovie = (props) => {
+const OneIdea = (props) => {
 
-
-    const {socket} = props;
-    const { ideas, setIdeas } = props;
+    const { socket } = props;
+    const [oneIdea, setOneIdea] = useState({});
     const [replyList, setReplyList] = useState([]);
     const [content, setContent] = useState("");
     const navigate = useNavigate();
 
-    const {id} = useParams();
+    const { id } = useParams();
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas/${id}`)
-            .then((res)=>{
+            .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                setIdeas(res.data);
-                setReplyList(res.data.replys);
+                setOneIdea(res.data);
+                setReplyList(res.data.replies);
             })
-            .catch((err)=>{
+            .catch((err) => {
                 console.log(err)
+                console.log("fail")
             })
     }, [id])
 
     const addAReply = () => {
-        axios.post("http://localhost:8000/api/replys/" + id,
+        axios.post(`http://localhost:8000/api/replies/${id}`,
             {
-                content, // content:content
-                associatedMovie: id
+                content, 
+                reply: id
             })
             .then((res) => {
                 console.log(res.data);
-                setReplyList([res.data, ...replyList ])
+                setReplyList([res.data, ...replyList])
             })
             .catch((err) => {
                 console.log(err);
@@ -46,18 +45,6 @@ const OneMovie = (props) => {
     }
 
 
-
-    const deleteOneMovie = ()=>{
-        axios.delete(`http://localhost:8000/api/ideas/${id}`)
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                navigate("/")
-                
-            })
-            .catch((err) => console.log(err))
-
-    }
 
 
     useEffect(() => {
@@ -68,7 +55,7 @@ const OneMovie = (props) => {
     }, [])
 
     const likeReply = (replyFromBelow) => {
-        axios.put(`http://localhost:8000/api/replys/${replyFromBelow._id}`,
+        axios.put(`http://localhost:8000/api/replies/${replyFromBelow._id}`,
             {
                 likes: replyFromBelow.likes + 1
             }
@@ -84,36 +71,18 @@ const OneMovie = (props) => {
                     return reply;
                 });
 
-                // setReplyList(updatedReplyList);
+
                 socket.emit("Update_chat", updatedReplyList)
             })
     }
 
     return (
         <div style={{ textAlign: "center" }}>
-            <header>
-                <h1 style={{
-                    fontSize: "50px", borderBottom: "5px double lightgray",
-                    marginLeft: "450px", marginRight: "450px"
-                }}>{movie.title}</h1>
-                <Link to={"/"}>Return Home</Link>
-            </header>
 
-            <p>{movie.genre}</p>
-            <img src={movie.boxArt} style={{ width: "150px", height: "150px" }}/>
-            <p>{movie.watchLength}</p>
-            <p>{movie.rating}</p>
-            <p>{movie.actors}</p>
-            <div>Kid Friendly
-                {
-                    movie.kidFriendly?
-                    <p>Okay for kids!!!</p>
-                    :<p>No kiddies allowed!!!!!!</p>
-                }
-            </div>
-            <p>{movie.yearReleased}</p>
-            <button onClick={deleteOneMovie}>Delete</button>
-
+                    <div>
+                        <p>{oneIdea.ideaName}</p>
+                    </div>
+                    
 
             <div>
 
@@ -141,4 +110,4 @@ const OneMovie = (props) => {
 
 
 
-export default OneMovie;
+export default OneIdea;

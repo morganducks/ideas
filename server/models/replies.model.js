@@ -9,7 +9,7 @@ const RepliesSchema = new mongoose.Schema({
 
     likes: {
         type: Number,
-        default: 0
+        default: 0, 
     },
 
     reply: {
@@ -25,9 +25,5 @@ const RepliesSchema = new mongoose.Schema({
 
 
 const Replies = mongoose.model("Replies", RepliesSchema);
-
-
-
-
 
 module.exports = Replies;

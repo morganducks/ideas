@@ -18,8 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 require('./config/mongoose.config');    
 require('./routes/idea.routes')(app);
 require('./routes/user.routes')(app);
+require("./routes/replies.routes")(app);
 
-app.listen(process.env.MY_PORT, () => console.log(`Listening at Port ${process.env.MY_PORT}`))
+const server = app.listen(8000, ()=>console.log("You are connected to port 8000"))
 
 const io = socket(server, {
     cors: {

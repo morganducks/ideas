@@ -7,10 +7,8 @@ import IdeasAdd from "../components/IdeasAdd"
 
 
 const IdeasListAll = (props) => {
-
     const { ideas, setIdeas } = props;
     const { user, setUser } = props;
-    // const [user, setUsers] = useState({})
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -19,12 +17,11 @@ const IdeasListAll = (props) => {
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas`,
-            // { withCredentials: true }
+            { withCredentials: true }
         )
             .then((res) => {
                 console.log(res.data);
                 setIdeas(res.data);
-
             })
             .catch((err) => {
                 console.log(err);
@@ -33,14 +30,12 @@ const IdeasListAll = (props) => {
     }, [])
 
     useEffect(() => {
-        
         axios.get("http://localhost:8000/api/user",
             { withCredentials: true }
         )
             .then((res) => {
                 console.log(res.data);
                 setUser(res.data);
-                setLiked(res.data)
             })
             .catch((err) => {
                 console.log(err);
@@ -50,17 +45,7 @@ const IdeasListAll = (props) => {
 
     const likeHandler = (e) => {
         e.preventDefault();
-        axios.put('http://localhost:8000/api/user',
-        // { withCredentials: true },
-        liked,
-    )
-        .then((res) => {
-                setLiked([])
-                console.log(liked)
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+  
 
     }
 
@@ -90,10 +75,11 @@ const IdeasListAll = (props) => {
                 ideas.slice(0).reverse().map((ideas, index) => {
                     return (
                         <div className="listContainerHome" key={ideas._id}>
-                            <p>{ideas.ideaName}</p>
+                            <Link to={`/ideas/${ideas._id}`}>{ideas.ideaName}</Link>
+                            
                             <p>{ideas.createdAt}</p>
-                            <p>{ideas._id}</p>
-                            <p>{ideas.userLikes}</p>
+                            <Link to={`/ideas/${ideas._id}`}>{ideas._id}</Link>
+                            <br/>
                             <Link to={`/user/profile/${ideas.createdBy?.userName}`}>{ideas.createdBy?.userName}</Link>
 
                             {/* <h3 className="listName">{ideas.userName}</h3></Link>
@@ -101,10 +87,10 @@ const IdeasListAll = (props) => {
 
                                 <div className="viewLinkBtn"><Link to={`/ideas/${ideas._id}`}>Get to know more about {ideas.ideaName}</Link></div>
                                 <div className="homeEditLink"><Link to={`/ideas/edit/${ideas._id}`}>Edit {ideas.ideaName}'s info</Link> */}
-
+<div>
                             <button className="mainButton likeButton" onClick={() => likeHandler()}>Give some love</button>
-                            <h3>has {liked} likes</h3>
-
+                            <h3>has {} likes</h3>
+</div>
                             <button className="mainButton" onClick={() => deleteIdea(ideas._id)}>Delete</button>
                         </div>
 

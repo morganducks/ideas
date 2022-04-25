@@ -5,5 +5,6 @@ module.exports = (app) => {
     app.post('/api/ideas', authenticate, IdeaController.createIdea); 
     app.get('/api/ideas', IdeaController.viewIdeas); 
     app.get('/api/ideasByUser/:userName', authenticate, IdeaController.findIdeasByUser); 
-    app.delete('/api/ideas/:id', IdeaController.deleteIdea); 
+    app.delete('/api/ideas/:id', IdeaController.deleteIdea);
+    app.get('/api/ideas/:id', IdeaController.oneIdea);  
 }

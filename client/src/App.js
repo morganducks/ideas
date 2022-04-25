@@ -1,9 +1,10 @@
 import './App.css';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import IdeasListAll from "./components/IdeasListAll"
 import IdeasAdd from "./components/IdeasAdd"
 import Profile from "./components/Profile"
+import OneIdea from "./components/OneIdea"
 import LogReg from "./views/LogReg"
 import io from 'socket.io-client';
 
@@ -29,6 +30,10 @@ function App() {
         <Routes>
           <Route element={<LogReg />} path="/" />
           <Route element={<IdeasListAll
+ideas={ideas}
+setIdeas={setIdeas}
+user={user}
+setUser={setUser}
           />} path="/home" />
 
           <Route element={<IdeasAdd
@@ -36,7 +41,10 @@ function App() {
           <Route element={<Profile
             />} path="/user/profile/:userName"
           />
-          <Route element={<OneIdea socket={socket}/>} path="/ideas/:id" />
+          <Route element={<OneIdea socket={socket}
+          ideas={ideas}
+          setIdeas={setIdeas}
+/>} path="/ideas/:id" />
         </Routes>
       </div>
     </BrowserRouter>
