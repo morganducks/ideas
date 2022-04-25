@@ -106,7 +106,33 @@ module.exports = {
             })
     },
 
-
+updateUserLikes: (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.id },
+        req.body,
+        // { new: true, runValidators: true }
+        )
+        .then((updateIdea) => {
+            res.json(updateIdea);
+            console.log(updateIdea);
+            console.log("Successfully updated Likes")
+        })
+        .catch((err) => {
+            console.log('Something went wrong during Likes');
+            console.log(err);
+            res.status(400).json(err);
+        })
+    }
 
 
 }
+
+// router.post('/:id',(req,res,next)=>{
+//     counter = req.body.like;
+//     TestData.update({_id:id},{$inc:{likes:counter}}).exec()
+//     .then(result=>{
+//     res.status(200).json({message:'liked'});
+//     }).
+//     catch(err=>{
+//     res.status(500).json({error:err});
+//     });
+//     });

@@ -7,7 +7,7 @@ import axios from "axios";
 const Likes = (props)=> {
 
     const { likedPosts,setLikedPosts } = props;
-    const { allIdeas, setAllIdeas } = props;
+    const { ideas, setIdeas } = props;
     const { userName } = props;
     
   const [isLiked, updateLike] = useState(false);

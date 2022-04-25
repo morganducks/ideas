@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const IdeasAdd = (props) => {
 
-    const {allIdeas, setAllIdeas} = props;
+    const {ideas, setIdeas} = props;
 
     const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const IdeasAdd = (props) => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                setAllIdeas("")
+                setIdeas("")
                 setIdeaName("")
                 navigate("/home")
             })

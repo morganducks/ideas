@@ -48,9 +48,9 @@ findIdeasByUser: (req, res) => {
         .then((userNotLoggedIn)=> {
             Idea.find({createdBy: userNotLoggedIn._id})
                 .populate("createdBy", "userName")
-                .then((allIdeasFromUser) => {
-                    console.log(allIdeasFromUser)
-                    res.json(allIdeasFromUser)
+                .then((ideasFromUser) => {
+                    console.log(ideasFromUser)
+                    res.json(ideasFromUser)
                 })
         })
         .catch((err) => {
@@ -64,9 +64,9 @@ findIdeasByUser: (req, res) => {
         
         Idea.find({createdBy: req.jwtPayload.id})
             .populate("createdBy", "userName")
-            .then((allIdeasFromLoggedUser) => {
-                console.log(allIdeasFromLoggedUser)
-                res.json(allIdeasFromLoggedUser)
+            .then((ideasFromLoggedUser) => {
+                console.log(ideasFromLoggedUser)
+                res.json(ideasFromLoggedUser)
                 console.log("all ideas?")
             })
         .catch((err) => {

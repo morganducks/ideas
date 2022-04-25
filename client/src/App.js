@@ -5,12 +5,23 @@ import IdeasListAll from "./components/IdeasListAll"
 import IdeasAdd from "./components/IdeasAdd"
 import Profile from "./components/Profile"
 import LogReg from "./views/LogReg"
+import io from 'socket.io-client';
 
 function App() {
 
-  const [allIdeas, setAllIdeas] = useState([]);
-  const [users, setUsers] = useState([])
-  const [liked, setLiked] = useState([])
+  const [ideas, setIdeas] = useState([]);
+  const [user, setUser] = useState([])
+  const [socket, setSocket] = useState(()=> io(":8000"))
+
+
+  useEffect(()=>{
+    socket.on("connect", ()=>{
+      console.log("socket in the client: ", socket.id)
+    })
+
+    return () => socket.disconnect(true);
+
+  }, [])
 
   return (
     <BrowserRouter>
@@ -18,27 +29,14 @@ function App() {
         <Routes>
           <Route element={<LogReg />} path="/" />
           <Route element={<IdeasListAll
-            allIdeas={allIdeas}
-            setAllIdeas={setAllIdeas}
-            users={users}
-            setUsers={setUsers}
-            likedPosts={liked}
-            setLikedPosts={setLiked}
           />} path="/home" />
 
           <Route element={<IdeasAdd
-            allIdeas={allIdeas}
-            setAllIdeas={setAllIdeas}
           />} path="/new" />
           <Route element={<Profile
-            allIdeas={allIdeas}
-            setAllIdeas={setAllIdeas}
-            users={users}
-            setUsers={setUsers}
-            likedPosts={liked}
-            setLikedPosts={setLiked} 
             />} path="/user/profile/:userName"
           />
+          <Route element={<OneIdea socket={socket}/>} path="/ideas/:id" />
         </Routes>
       </div>
     </BrowserRouter>
