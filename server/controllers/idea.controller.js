@@ -6,7 +6,8 @@ module.exports = {
 
 viewIdeas: (req, res) => {
     Idea.find()
-    .populate("replies", "content _id")
+    .populate("replies", "content _id likes")
+    .populate("createdBy", "userName")
         .then((viewIdeas) => {
             res.json(viewIdeas)
             console.log("All great ideas!")
@@ -48,6 +49,7 @@ findIdeasByUser: (req, res) => {
         .then((userNotLoggedIn)=> {
             Idea.find({createdBy: userNotLoggedIn._id})
                 .populate("createdBy", "userName")
+                .populate("replies", "content _id likes")
                 .then((ideasFromUser) => {
                     console.log(ideasFromUser)
                     res.json(ideasFromUser)
@@ -63,7 +65,8 @@ findIdeasByUser: (req, res) => {
         console.log("req.jwtPayload.id:", req.jwtPayload.id)
         
         Idea.find({createdBy: req.jwtPayload.id})
-            .populate("createdBy", "userName")
+            .populate("createdBy", "userName userEmail")
+            .populate("replies", "content _id likes")
             .then((ideasFromLoggedUser) => {
                 console.log(ideasFromLoggedUser)
                 res.json(ideasFromLoggedUser)
@@ -81,11 +84,11 @@ deleteIdea: (req, res) => {
     Idea.deleteOne({ _id: req.params.id })
     .then((deletedIdea) => {
         res.json(deletedIdea)
-        console.log("Successfully deleted pet")
+        console.log("Successfully deleted post")
     })
         .catch((err) => {
             res.json(err)
-            console.log("Did not Delete pet")
+            console.log("Did not Delete post")
         })
     },
 
@@ -97,7 +100,7 @@ deleteIdea: (req, res) => {
             .then((updateIdea) => {
                 res.json(updateIdea);
                 console.log(updateIdea);
-                console.log("Successfully updated pet")
+                console.log("Successfully updated post")
             })
             .catch((err) => {
                 console.log('Something went wrong during updateIdea');
@@ -108,7 +111,7 @@ deleteIdea: (req, res) => {
 
         oneIdea: (req, res) => {   
         Idea.findOne({ _id: req.params.id })
-        .populate("createdBy", "userName userEmail")
+        .populate("replies", "content likes")
             .then((viewIdeas) => {
                 res.json(viewIdeas)
                 console.log("All great ideas!")

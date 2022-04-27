@@ -97,6 +97,7 @@ module.exports = {
 
     findUsers: (req, res) => {
         User.find()
+        .populate("replies", "content _id likes")
             .then((allUsers) => {
                 res.json(allUsers);
             })
@@ -108,9 +109,11 @@ module.exports = {
 
 updateUserLikes: (req, res) => {
     User.findOneAndUpdate({ _id: req.params.id },
+        
         req.body,
         // { new: true, runValidators: true }
         )
+        .populate("replies", "content _id likes")
         .then((updateIdea) => {
             res.json(updateIdea);
             console.log(updateIdea);
@@ -126,13 +129,3 @@ updateUserLikes: (req, res) => {
 
 }
 
-// router.post('/:id',(req,res,next)=>{
-//     counter = req.body.like;
-//     TestData.update({_id:id},{$inc:{likes:counter}}).exec()
-//     .then(result=>{
-//     res.status(200).json({message:'liked'});
-//     }).
-//     catch(err=>{
-//     res.status(500).json({error:err});
-//     });
-//     });

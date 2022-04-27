@@ -12,11 +12,13 @@ function App() {
 
   const [ideas, setIdeas] = useState([]);
   const [user, setUser] = useState([])
-  const [socket, setSocket] = useState(()=> io(":8000"))
+  const [socket, setSocket] = useState(() => io(":8000"))
+  const [replyList, setReplyList] = useState([]);
 
 
-  useEffect(()=>{
-    socket.on("connect", ()=>{
+
+  useEffect(() => {
+    socket.on("connect", () => {
       console.log("socket in the client: ", socket.id)
     })
 
@@ -30,21 +32,27 @@ function App() {
         <Routes>
           <Route element={<LogReg />} path="/" />
           <Route element={<IdeasListAll
-ideas={ideas}
-setIdeas={setIdeas}
-user={user}
-setUser={setUser}
+            ideas={ideas}
+            setIdeas={setIdeas}
+            user={user}
+            setUser={setUser}
+            replyList={replyList}
+            setReplyList={setReplyList}
+            socket={socket}
           />} path="/home" />
 
           <Route element={<IdeasAdd
           />} path="/new" />
           <Route element={<Profile
-            />} path="/user/profile/:userName"
+          />} path="/user/profile/:userName"
           />
-          <Route element={<OneIdea socket={socket}
-          ideas={ideas}
-          setIdeas={setIdeas}
-/>} path="/ideas/:id" />
+          <Route element={<OneIdea 
+            socket={socket}
+            ideas={ideas}
+            setIdeas={setIdeas}
+            replyList={replyList}
+            setReplyList={setReplyList}
+          />} path="/ideas/:id" />
         </Routes>
       </div>
     </BrowserRouter>
