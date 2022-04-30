@@ -11,6 +11,8 @@ const IdeasListAll = (props) => {
     const { id } = useParams();
     const { socket } = props;
     const { replyList, setReplyList } = props;
+    const [ideaLikes, setIdeaLikes] = useState(0)
+
 
 
     useEffect(() => {
@@ -21,6 +23,8 @@ const IdeasListAll = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setIdeas(res.data);
+                setIdeaLikes(res.data.ideaLikes)
+                // console.log(res.data.ideaLikes)
             })
             .catch((err) => {
                 console.log(err);
@@ -47,19 +51,17 @@ const IdeasListAll = (props) => {
         )
             .then((res) => {
                 console.log(res.data);
-                setReplyList(res.data);
             })
             .catch((err) => {
                 console.log(err);
             })
     }, [])
 
-
+    //chain put request to then and then to put to multiple databases.
 
     const deleteIdea = (idFromBelow) => {
         axios.delete(`http://localhost:8000/api/ideas/${idFromBelow}`)
             .then((res) => {
-                console.log(res);
                 console.log(res.data);
                 setIdeas(ideas.filter(ideas => ideas._id !== idFromBelow))
                 navigate("/home")
@@ -68,36 +70,54 @@ const IdeasListAll = (props) => {
 
     }
 
-    //    remember to add to model
+    const likeIdea = () => {
+        setIdeaLikes(ideaLikes)
+        axios.put(`http://localhost:8000/api/ideas/${id}`
+        )
+            .then((res) => {
+                setIdeaLikes(res.data.ideaLikes)
+                console.log(res.data);
+            })
+            .catch((err) => { console.log(err) });
+    }
+
+
+
+    //chain put request to then and then to put to multiple databases.
+
     return (
         <div>
 
             Some text
             <IdeasAdd />
             {
-                ideas.slice(0).reverse().map((ideas, index) => {
+                ideas.slice(0).reverse().map((idea, index) => {
                     return (
-                        <div className="listContainerHome" key={ideas._id}>
-                            <Link to={`/ideas/${ideas._id}`}>{ideas.ideaName}</Link>
-                            <p>{ideas.createdAt}</p>
-                            {
-                                replyList.map((allReplies,index) => {
-                                    <div key={allReplies._id}>
-                                        <p>{allReplies.likes}</p>
-                                        </div>
-                                })
-                            }
-                            <Link to={`/ideas/${ideas._id}`}>{ideas._id}</Link>
-                            <p>{ideas.replies?.length} replies</p>
+                        <div className="listContainerHome" key={idea._id}>
+                            <Link to={`/ideas/${idea._id}`}>{idea.ideaName}</Link>
+                            <p>{idea.createdAt}</p>
+
+                            <Link to={`/ideas/${idea._id}`}>{idea._id}</Link>
+                            {idea.replies.map((postReply) => {
+                                return (
+                                    <div key={postReply._id}>
+                                        <p>{postReply.content}</p>
+                                    </div>
+                                )
+                            })}
+                            <p>{idea.replies?.length} replies</p>
                             <br />
-                            <Link to={`/user/profile/${ideas.createdBy?.userName}`}>{ideas.createdBy?.userName}</Link>
+                            <Link to={`/user/profile/${idea.createdBy?.userName}`}>{idea.createdBy?.userName}</Link>
 
+                            <button onClick={() => likeIdea(idea.ideaLikes +1)}>Like {idea.ideaLikes}</button>
 
-
+                            
+                            <p>{idea.ideaLikes}</p>
+                         
                             <div>
 
                             </div>
-                            <button className="mainButton" onClick={() => deleteIdea(ideas._id)}>Delete</button>
+                            <button className="mainButton" onClick={() => deleteIdea(idea._id)}>Delete</button>
                         </div>
 
 

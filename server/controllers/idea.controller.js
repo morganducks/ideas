@@ -49,6 +49,7 @@ findIdeasByUser: (req, res) => {
         .then((userNotLoggedIn)=> {
             Idea.find({createdBy: userNotLoggedIn._id})
                 .populate("createdBy", "userName")
+                .populate("ideas", "ideaLikes")
                 .populate("replies", "content _id likes")
                 .then((ideasFromUser) => {
                     console.log(ideasFromUser)
@@ -95,7 +96,7 @@ deleteIdea: (req, res) => {
     updateIdea: (req, res) => {
         Idea.findOneAndUpdate({ _id: req.params.id },
             req.body,
-            // { new: true, runValidators: true }
+            { new: true, runValidators: true }
             )
             .then((updateIdea) => {
                 res.json(updateIdea);

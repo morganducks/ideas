@@ -14,7 +14,8 @@ function App() {
   const [user, setUser] = useState([])
   const [socket, setSocket] = useState(() => io(":8000"))
   const [replyList, setReplyList] = useState([]);
-
+  // const [ideaLikes, setIdeaLikes] = useState([])
+// const [likesByUser,setLikesByUser] = useState(0)
 
 
   useEffect(() => {
@@ -38,6 +39,8 @@ function App() {
             setUser={setUser}
             replyList={replyList}
             setReplyList={setReplyList}
+            // ideaLikes={ideaLikes}
+            // setIdeaLikes={setIdeaLikes}
             socket={socket}
           />} path="/home" />
 

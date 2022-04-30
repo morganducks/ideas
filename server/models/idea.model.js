@@ -10,6 +10,10 @@ const IdeaSchema = new mongoose.Schema({
         ref: "User"
     },
 
+    ideaLikes: {
+        type: Number,
+    },
+
     replies: [
         {
             type: mongoose.Schema.Types.ObjectId,

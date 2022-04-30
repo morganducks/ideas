@@ -54,7 +54,7 @@ module.exports = {
             req.body,
             { new: true, runValidators: true }
         )
-            .populate("reply", "title yearReleased")
+            .populate("reply", "")
             .then((likeAdded) => {
                 res.json(likeAdded)
             })
