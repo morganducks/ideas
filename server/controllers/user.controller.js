@@ -108,15 +108,16 @@ module.exports = {
     },
 
 updateUserLikes: (req, res) => {
-    User.findOneAndUpdate({ _id: req.params.id },
+    User.findOneAndUpdate({_id: req.params.id },
         
         req.body,
-        // { new: true, runValidators: true }
+        { new: true, runValidators: true }
         )
         .populate("replies", "content _id likes")
-        .then((updateIdea) => {
-            res.json(updateIdea);
-            console.log(updateIdea);
+        .populate("userLikes")
+        .then((updateUser) => {
+            res.json(updateUser);
+            console.log(updateUser);
             console.log("Successfully updated Likes")
         })
         .catch((err) => {

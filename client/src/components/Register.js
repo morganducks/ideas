@@ -14,6 +14,7 @@ const Register = (props) => {
         userEmail: "",
         userPassword: "",
         confirmUserPassword: "",
+        userLikes: 0
     })
 
     const changeHandler = (e) => {

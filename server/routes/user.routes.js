@@ -6,7 +6,8 @@ module.exports = (app) => {
     app.post('/api/user/login', UserController.login);
     app.post('/api/user/logout', UserController.logout);
     app.get('/api/user', authenticate, UserController.loggedInUser);
-    app.post('/api/user/:userLikes', UserController.updateUserLikes);
+    app.put('/api/user/:userId', UserController.updateUserLikes);
+
 
 }
 

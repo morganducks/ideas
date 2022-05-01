@@ -20,6 +20,7 @@ const Profile = (props)=>{
             .then((res) => {
                 console.log(res.data);
                 setUserList(res.data);
+                console.log(res.data.userLikes)
             })
             .catch((err) => {
                 console.log(err);
@@ -38,11 +39,12 @@ return(
     <IdeasAdd />
 
         {
-        userList.map((ideas,index) => (
+        userList.map((userIdea,index) => (
             <div key={index}>
-                <p>{ideas.ideaName}</p>
-                <p>{ideas.createdAt}</p>
-                
+                <p>{userIdea.ideaName}</p>
+                <p>{userIdea.createdAt}</p>
+                <p>{userIdea.createdBy.userEmail}</p>
+                <p>{userIdea.userLikes}</p>
                 </div>
 
         )
