@@ -108,13 +108,13 @@ module.exports = {
     },
 
 updateUserLikes: (req, res) => {
-    User.findOneAndUpdate({_id: req.jwtPayload.id },
+    User.findOneAndUpdate({_id: req.params.id },
         
         req.body,
-        { new: true, useFindAndModify: true, runValidators: true }
+        { new: true, runValidators: true }
         )
         .populate("replies", "content _id likes")
-        .populate("userLikes")
+        .populate("ideaLikes")
         .then((updateUser) => {
             res.json(updateUser);
             console.log(updateUser);
