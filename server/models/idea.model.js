@@ -10,9 +10,11 @@ const IdeaSchema = new mongoose.Schema({
         ref: "User"
     },
 
-    ideaLikes: {
-        type: Number,
-    },
+    ideaLikes: [
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
 
     replies: [
         {
