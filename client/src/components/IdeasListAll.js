@@ -9,11 +9,10 @@ const IdeasListAll = (props) => {
     const { user, setUser } = props;
     const navigate = useNavigate();
     const { id } = useParams();
-    const { userId} = useParams();
+    const { userName } = useParams();
     const { socket } = props;
     const { replyList, setReplyList } = props;
     const [ideaLikes, setIdeaLikes] = useState([])
-    const [userLikes,setUserLikes] = useState(0)
 
 
 
@@ -73,14 +72,14 @@ const IdeasListAll = (props) => {
 
     }
 
-    const likeIdea = (id, event, ideaLikes, userId, userLikes) => {
-        console.log(userId + "user ID")
+    const likeIdea = (id, event, ideaLikes, userName) => {
+        console.log(userName + " logged in user ID")
             console.log(ideaLikes + " idea likes")
             // console.log(typeof ideaLikes)
             console.log(id + " ideaID")
             axios.put(`http://localhost:8000/api/ideas/${id}`)
                 .then((res) => {
-                    setIdeaLikes(res.data.userID)
+                    setIdeaLikes([...res.data,userName])
                     // console.log(res);
                     console.log("idea likes " + ideaLikes);
                     console.log("edited")
@@ -130,7 +129,7 @@ const IdeasListAll = (props) => {
                             <Link to={`/user/profile/${idea.createdBy?.userName}`}>{idea.createdBy?.userName}</Link>
 
                             {/* <button value={idea.ideaLikes} onClick={(e) => setIdeaLikes(e.target.value +1)}>Like {idea.ideaLikes}</button> */}
-                            <button className="mainButton likeButton" onClick={($event) => likeIdea(idea._id, $event, idea.ideaLikes +1, idea.ideaLikes.userId)}>Give {idea.ideaLikes} some love</button>
+                            <button className="mainButton likeButton" onClick={($event) => likeIdea(idea._id, $event, idea.ideaLikes +1, idea.userName)}>Give {idea.ideaLikes} some love</button>
                             <p>{idea.createdBy?.userLikes} user</p>
                             <p>{user._id} user id</p>
                             <p>{idea.ideaLikes}</p>

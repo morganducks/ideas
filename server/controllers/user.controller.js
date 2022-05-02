@@ -82,9 +82,6 @@ module.exports = {
     },
 
     loggedInUser: (req, res) => {
-        // const decodeJWT = jwt.decode(req.cookies.userToken, {
-        //     complete: true,
-        // })
         User.findOne({_id: req.jwtPayload.id})
         .then((loggedInUser)=> {
             console.log(loggedInUser)
@@ -108,10 +105,10 @@ module.exports = {
     },
 
 updateUserLikes: (req, res) => {
-    User.findOneAndUpdate({_id: req.params.id },
+    User.findOneAndUpdate({_id: req.jwtPayload.id },
         
         req.body,
-        { new: true, runValidators: true }
+        // { new: true, runValidators: true }
         )
         .populate("replies", "content _id likes")
         .populate("ideaLikes")
