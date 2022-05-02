@@ -13,8 +13,21 @@ const IdeasListAll = (props) => {
     const { socket } = props;
     const { replyList, setReplyList } = props;
     const [ideaLikes, setIdeaLikes] = useState([])
+    const [userList, setUserList] = useState([])
 
-
+    useEffect(()=>{
+        axios.get(`http://localhost:8000/api/ideasByUser/${userName}`,
+        { withCredentials: true }
+        )
+            .then((res) => {
+                console.log(res.data);
+                setUserList(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+                console.log("not finding")
+            })
+    }, [])
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas`,
@@ -24,7 +37,7 @@ const IdeasListAll = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setIdeas(res.data);
-                setIdeaLikes(res.data.ideaLikes)
+                setIdeaLikes(res.data.userName)
                 console.log(res + "result")
             })
             .catch((err) => {
@@ -73,7 +86,7 @@ const IdeasListAll = (props) => {
     }
 
     const likeIdea = (id, event, ideaLikes, userName) => {
-        console.log(userName + " logged in user ID")
+        console.log(userName + " logged in userName")
             console.log(ideaLikes + " idea likes")
             // console.log(typeof ideaLikes)
             console.log(id + " ideaID")
