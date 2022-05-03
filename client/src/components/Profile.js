@@ -20,7 +20,6 @@ const Profile = (props)=>{
             .then((res) => {
                 console.log(res.data);
                 setUserList(res.data);
-                console.log(res.data.userLikes)
             })
             .catch((err) => {
                 console.log(err);

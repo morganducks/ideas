@@ -10,15 +10,16 @@ const IdeaSchema = new mongoose.Schema({
         ref: "User"
     },
 
-    ideaLikes: {
-        type: Array,
-    },
+    ideaLikes: 
+    [{
+            type: String,
+        }],
     
-    // [
+    
     //     {
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: "User"
-    // }],
+    // },
 
     replies: [
         {

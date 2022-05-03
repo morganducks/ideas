@@ -8,11 +8,13 @@ userName: {
     required: [true, "Unsername is required"],
     minlength: [3, "Username name must be at least 3 characters long"],
 },
+
 userPassword: {
     type: String,
     required: [true, "Password is required"],
     minlength: [8, "Password name must be at least 8 characters long"],
 },
+
 userEmail: {
     type: String,
     trim: true,
@@ -22,6 +24,10 @@ userEmail: {
     // validate: [validateEmail, 'Please fill a valid email address'],
     // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
 },
+
+// userLikes: {
+//     type: String
+// },
 
 }, { timestamps: true });
 

@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Idea = require('../models/idea.model');
 const User = require('../models/user.model')
+const Likes = require('../models/likes.model')
 
 module.exports = {
 
@@ -113,6 +114,7 @@ deleteIdea: (req, res) => {
         oneIdea: (req, res) => {   
         Idea.findOne({ _id: req.params.id })
         .populate("replies", "content likes")
+        .populate("ideaLikes", "ideaId ideaName")
             .then((viewIdeas) => {
                 res.json(viewIdeas)
                 console.log("All great ideas!")

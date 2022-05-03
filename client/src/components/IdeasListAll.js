@@ -13,21 +13,9 @@ const IdeasListAll = (props) => {
     const { socket } = props;
     const { replyList, setReplyList } = props;
     const [ideaLikes, setIdeaLikes] = useState([])
-    const [userList, setUserList] = useState([])
+    const [userLike,setUserLike] = useState({})
 
-    useEffect(()=>{
-        axios.get(`http://localhost:8000/api/ideasByUser/${userName}`,
-        { withCredentials: true }
-        )
-            .then((res) => {
-                console.log(res.data);
-                setUserList(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-                console.log("not finding")
-            })
-    }, [])
+
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas`,
@@ -37,8 +25,7 @@ const IdeasListAll = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setIdeas(res.data);
-                setIdeaLikes(res.data.userName)
-                console.log(res + "result")
+                // setIdeaLikes(res.data.ideaLikes)
             })
             .catch((err) => {
                 console.log(err);
@@ -47,18 +34,35 @@ const IdeasListAll = (props) => {
     }, [])
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/user",
+        axios.get(`http://localhost:8000/api/user/`,
             { withCredentials: true }
         )
             .then((res) => {
                 console.log(res.data);
-                setUser(res.data);
-                // setUserLikes(res.data.userLikes)
+                setUser(res.data)
+                // setIdeaLikes([res.data,...ideaLikes]);
+                console.log(user._id + " user pull")
+                // setUserLike(res.data.userLike)
+                // console.log(userLike)
             })
             .catch((err) => {
                 console.log(err);
             })
     }, [])
+
+    // useEffect(() => {
+    //     axios.get(`http://localhost:8000/api/ideas/${id}`,
+    //         { withCredentials: true }
+    //     )
+    //         .then((res) => {
+    //         // console.log(res.data)
+    //         setIdeaLikes([res.data,...ideaLikes])
+    //         console.log(ideaLikes);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         })
+    // }, [])
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/replies",
@@ -67,6 +71,7 @@ const IdeasListAll = (props) => {
             .then((res) => {
                 console.log(res.data);
             })
+        
             .catch((err) => {
                 console.log(err);
             })
@@ -82,28 +87,32 @@ const IdeasListAll = (props) => {
                 navigate("/home")
             })
             .catch((err) => { console.log(err) });
-
     }
 
-    const likeIdea = (id, event, ideaLikes, userName) => {
-        console.log(userName + " logged in userName")
-            console.log(ideaLikes + " idea likes")
-            // console.log(typeof ideaLikes)
-            console.log(id + " ideaID")
-            axios.put(`http://localhost:8000/api/ideas/${id}`)
-                .then((res) => {
-                    setIdeaLikes([...res.data,userName])
-                    // console.log(res);
-                    console.log("idea likes " + ideaLikes);
-                    console.log("edited")
-                    // event.target.disabled = true;
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        }
+    const likeIdea = (idea, user) => {
+        axios.get(`http://localhost:8000/api/ideas/${idea}`)
+        .then((res) => {
+            console.log(res,user)
+            const updateLikes = {...res.data};
+            updateLikes.ideaLikes.push(user);
+            const finalLikes = [...new Set(updateLikes.ideaLikes)]
+            updateLikes.ideaLikes = finalLikes;
+        // setIdeaLikes([...res.data.ideaLikes, user]);
+        axios.put(`http://localhost:8000/api/ideas/${idea}`,
+        updateLikes
+        )
+        .then((res) => {
+            console.log(res.data);
+            setIdeaLikes(res.data);
+                console.log("edited")
+                // event.target.disabled = true;
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    })}
 
-        // setIdeaLikes(ideaLikes)
+    // setIdeaLikes(ideaLikes)
     //     axios.put(`http://localhost:8000/api/ideas/${id}`
     //     )
     //         .then((res) => {
@@ -142,10 +151,13 @@ const IdeasListAll = (props) => {
                             <Link to={`/user/profile/${idea.createdBy?.userName}`}>{idea.createdBy?.userName}</Link>
 
                             {/* <button value={idea.ideaLikes} onClick={(e) => setIdeaLikes(e.target.value +1)}>Like {idea.ideaLikes}</button> */}
-                            <button className="mainButton likeButton" onClick={($event) => likeIdea(idea._id, $event, idea.ideaLikes +1, idea.userName)}>Give {idea.ideaLikes} some love</button>
-                            <p>{idea.createdBy?.userLikes} user</p>
+
+
+
+                            <button className="mainButton likeButton" onClick={() => likeIdea(idea._id, user.userName)}> {user.userName} {idea.ideaLikes.length} some love</button>
+                            
                             <p>{user._id} user id</p>
-                            <p>{idea.ideaLikes}</p>
+                            <p>{idea.ideaLikes} users who have liked this</p>
 
                             <div>
 
