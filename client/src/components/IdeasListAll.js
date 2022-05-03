@@ -10,12 +10,7 @@ const IdeasListAll = (props) => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { userName } = useParams();
-    const { socket } = props;
-    const { replyList, setReplyList } = props;
-    const [ideaLikes, setIdeaLikes] = useState([])
-    const [userLike,setUserLike] = useState({})
-
-
+    const { ideaLikes, setIdeaLikes } = props;
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas`,
@@ -40,29 +35,12 @@ const IdeasListAll = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setUser(res.data)
-                // setIdeaLikes([res.data,...ideaLikes]);
                 console.log(user._id + " user pull")
-                // setUserLike(res.data.userLike)
-                // console.log(userLike)
             })
             .catch((err) => {
                 console.log(err);
             })
     }, [])
-
-    // useEffect(() => {
-    //     axios.get(`http://localhost:8000/api/ideas/${id}`,
-    //         { withCredentials: true }
-    //     )
-    //         .then((res) => {
-    //         // console.log(res.data)
-    //         setIdeaLikes([res.data,...ideaLikes])
-    //         console.log(ideaLikes);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         })
-    // }, [])
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/replies",
@@ -71,7 +49,7 @@ const IdeasListAll = (props) => {
             .then((res) => {
                 console.log(res.data);
             })
-        
+
             .catch((err) => {
                 console.log(err);
             })
@@ -91,40 +69,26 @@ const IdeasListAll = (props) => {
 
     const likeIdea = (idea, user) => {
         axios.get(`http://localhost:8000/api/ideas/${idea}`)
-        .then((res) => {
-            console.log(res,user)
-            const updateLikes = {...res.data};
-            updateLikes.ideaLikes.push(user);
-            const finalLikes = [...new Set(updateLikes.ideaLikes)]
-            updateLikes.ideaLikes = finalLikes;
-        // setIdeaLikes([...res.data.ideaLikes, user]);
-        axios.put(`http://localhost:8000/api/ideas/${idea}`,
-        updateLikes
-        )
-        .then((res) => {
-            console.log(res.data);
-            setIdeaLikes(res.data);
-                console.log("edited")
-                // event.target.disabled = true;
+            .then((res) => {
+                console.log(res, user)
+                const updateLikes = { ...res.data };
+                updateLikes.ideaLikes.push(user);
+                const finalLikes = [...new Set(updateLikes.ideaLikes)]
+                updateLikes.ideaLikes = finalLikes;
+                axios.put(`http://localhost:8000/api/ideas/${idea}`,
+                    updateLikes
+                )
+                    .then((res) => {
+                        console.log(res.data);
+                        setIdeaLikes(res.data);
+                        console.log("edited")
+                        // event.target.disabled = true;
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
             })
-            .catch((err) => {
-                console.log(err)
-            })
-    })}
-
-    // setIdeaLikes(ideaLikes)
-    //     axios.put(`http://localhost:8000/api/ideas/${id}`
-    //     )
-    //         .then((res) => {
-    //             setIdeaLikes(res.data.ideaLikes)
-    //             console.log(res.data.ideaLikes);
-    //         })
-    //         .catch((err) => { console.log(err) });
-    // }
-
-
-
-    //chain put request to then and then to put to multiple databases.
+    }
 
     return (
         <div>
@@ -150,12 +114,8 @@ const IdeasListAll = (props) => {
                             <br />
                             <Link to={`/user/profile/${idea.createdBy?.userName}`}>{idea.createdBy?.userName}</Link>
 
-                            {/* <button value={idea.ideaLikes} onClick={(e) => setIdeaLikes(e.target.value +1)}>Like {idea.ideaLikes}</button> */}
-
-
-
                             <button className="mainButton likeButton" onClick={() => likeIdea(idea._id, user.userName)}> {user.userName} {idea.ideaLikes.length} some love</button>
-                            
+
                             <p>{user._id} user id</p>
                             <p>{idea.ideaLikes} users who have liked this</p>
 
