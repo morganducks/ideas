@@ -11,6 +11,8 @@ const Profile = (props) => {
     const { ideas, setIdeas } = props;
     const { ideaLikes, setIdeaLikes } = props;
     const { user, setUser } = props;
+    const { id } = useParams();
+    const [allLikes, setAllLikes] = useState([])
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideasByUser/${userName}`,
@@ -18,7 +20,17 @@ const Profile = (props) => {
         )
             .then((res) => {
                 console.log(res.data);
+                // console.log(res.data.createdBy.ideaLikes);
+                setIdeas(res.data);
                 setUser(res.data);
+                const likesAdded = ideas.map(element => {
+                    return { allIdeaLikes: element.ideaLikes.length }
+                })
+
+                const likesArray = [...likesAdded];
+                likesArray.push(likesAdded)
+                console.log(likesAdded)
+
             })
             .catch((err) => {
                 console.log(err);
@@ -28,23 +40,27 @@ const Profile = (props) => {
 
 
 
+    //loop through records and add all ideaLikes
+
     return (
         <div>
             Profile
 
             {userName}
+            <p>{ideas.ideaLikes}</p>
 
-            <IdeasAdd />
+            {/* <IdeasAdd /> */}
 
             {
-                user.map((profile, index) => {
+                ideas.map((profile, index) => {
                     return (
                         <div key={index}>
                             <p>{profile.ideaName}</p>
                             <p>{profile.createdAt}</p>
                             <p>{profile.createdBy.userEmail}</p>
                             <p>{profile.ideaLikes}</p>
-                            <p>{profile.ideaLikes.length}</p>
+                            <p>Likes of post: {profile.ideaLikes.length}</p>
+                            <p>Ideas posted: {ideas.length}</p>
                         </div>
                     )
                 }

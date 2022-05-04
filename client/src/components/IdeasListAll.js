@@ -71,6 +71,7 @@ const IdeasListAll = (props) => {
         axios.get(`http://localhost:8000/api/ideas/${idea}`)
             .then((res) => {
                 console.log(res, user)
+                //help from former Dojo student
                 const updateLikes = { ...res.data };
                 updateLikes.ideaLikes.push(user);
                 const finalLikes = [...new Set(updateLikes.ideaLikes)]
@@ -81,6 +82,7 @@ const IdeasListAll = (props) => {
                     .then((res) => {
                         console.log(res.data);
                         setIdeaLikes(res.data);
+                        console.log(res.data.ideaLikes + " idea")
                         console.log("edited")
                         // event.target.disabled = true;
                     })

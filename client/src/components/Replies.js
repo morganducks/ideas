@@ -21,6 +21,8 @@ const Replies = (props) => {
     //     })
     // }, [])
 
+
+    //from course code
     const likeReply = (replyFromBelow) => {
         axios.put(`http://localhost:8000/api/replies/${replyFromBelow._id}`,
             {

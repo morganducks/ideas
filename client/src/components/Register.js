@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 const Register = (props) => {
-
+    //source: lecture
     const [registrationConfirmed, setRegistrationConfirmed] = useState("")
     const [errors, setErrors] = useState({})
 

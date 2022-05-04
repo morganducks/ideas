@@ -31,7 +31,7 @@ const OneIdea = (props) => {
             })
     }, [id])
     
-
+    //from course code
     const addAReply = () => {
         axios.post(`http://localhost:8000/api/replies/${id}`,
             {

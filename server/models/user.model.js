@@ -25,8 +25,9 @@ userEmail: {
     // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
 },
 
-// userLikes: {
-//     type: String
+// ideaLikesForUser: 
+// {
+//         type: String,
 // },
 
 }, { timestamps: true });
