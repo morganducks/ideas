@@ -11,8 +11,7 @@ const Profile = (props) => {
     const { ideas, setIdeas } = props;
     const { ideaLikes, setIdeaLikes } = props;
     const { user, setUser } = props;
-    const { id } = useParams();
-    const [allLikes, setAllLikes] = useState([])
+
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideasByUser/${userName}`,
@@ -23,20 +22,13 @@ const Profile = (props) => {
                 // console.log(res.data.createdBy.ideaLikes);
                 setIdeas(res.data);
                 setUser(res.data);
-                const likesAdded = ideas.map(element => {
-                    return { allIdeaLikes: element.ideaLikes.length }
-                })
-
-                const likesArray = [...likesAdded];
-                likesArray.push(likesAdded)
-                console.log(likesAdded)
-
             })
             .catch((err) => {
                 console.log(err);
                 console.log("not finding")
             })
     }, [])
+
 
 
 

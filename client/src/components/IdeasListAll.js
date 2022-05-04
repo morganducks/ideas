@@ -12,6 +12,7 @@ const IdeasListAll = (props) => {
     const { id } = useParams();
     const { userName } = useParams();
     const { ideaLikes, setIdeaLikes } = props;
+    const {ideaLikesForUser, setIdeaLikesForUser} = props;
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas`,
@@ -84,11 +85,14 @@ const IdeasListAll = (props) => {
                         setIdeaLikes(res.data);
                         console.log(res.data.ideaLikes + " idea")
                         console.log("edited")
+                        // setIdeaLikesForUser(res.data.ideaLikes +1);
+                        // console.log(ideaLikesForUser +"userlikes");
                         // event.target.disabled = true;
                     })
                     .catch((err) => {
                         console.log(err)
                     })
+                    
             })
     }
 

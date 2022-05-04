@@ -27,7 +27,7 @@ userEmail: {
 
 // ideaLikesForUser: 
 // {
-//         type: String,
+//         type: Number,
 // },
 
 }, { timestamps: true });

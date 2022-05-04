@@ -24,6 +24,7 @@ const OneIdea = (props) => {
                 console.log(res.data);
                 setOneIdea(res.data);
                 setReplyList(res.data.replies);
+                console.log(oneIdea.ideaLikes)
             })
             .catch((err) => {
                 console.log(err)
@@ -82,7 +83,7 @@ const OneIdea = (props) => {
 
             <div>
                 <p>{oneIdea.ideaName}</p>
-                <p>{ideas.ideaLikes}</p>
+                <p>{oneIdea.ideaLikes}</p>
             </div>
             {/* <button className="mainButton likeButton" onClick={() => likeIdea(ideas._id, user.userName)}> {user.userName} {ideas.ideaLikes.length} some love</button> */}
 
