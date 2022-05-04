@@ -50,7 +50,7 @@ findIdeasByUser: (req, res) => {
         .then((userNotLoggedIn)=> {
             Idea.find({createdBy: userNotLoggedIn._id})
                 .populate("createdBy", "userName")
-                .populate("ideas", "ideaLikes")
+                // .populate("ideas", "ideaLikes")
                 .populate("replies", "content _id likes")
                 .then((ideasFromUser) => {
                     console.log(ideasFromUser)

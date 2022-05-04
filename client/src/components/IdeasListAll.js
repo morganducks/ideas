@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import IdeasAdd from "../components/IdeasAdd"
+import oneIdea from "../components/OneIdea"
 
 
 const IdeasListAll = (props) => {
@@ -20,7 +21,6 @@ const IdeasListAll = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setIdeas(res.data);
-                // setIdeaLikes(res.data.ideaLikes)
             })
             .catch((err) => {
                 console.log(err);
@@ -35,7 +35,7 @@ const IdeasListAll = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setUser(res.data)
-                console.log(user._id + " user pull")
+                console.log(user.userName + " user pull")
             })
             .catch((err) => {
                 console.log(err);

@@ -1,25 +1,24 @@
-import React, {useState, useEffect} from "react";
-import  {useParams} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import IdeasAdd from "../components/IdeasAdd"
 
 
 
 
-const Profile = (props)=>{
+const Profile = (props) => {
+    const { userName } = useParams();
+    const { ideas, setIdeas } = props;
+    const { ideaLikes, setIdeaLikes } = props;
+    const { user, setUser } = props;
 
-    const {userName} = useParams();
-    const [ userList, setUserList ] = useState([]);
-    
-
-
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`http://localhost:8000/api/ideasByUser/${userName}`,
-        { withCredentials: true }
+            { withCredentials: true }
         )
             .then((res) => {
                 console.log(res.data);
-                setUserList(res.data);
+                setUser(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -29,33 +28,32 @@ const Profile = (props)=>{
 
 
 
+    return (
+        <div>
+            Profile
 
-return(
-<div>
-    Profile
-    {userName}
+            {userName}
 
-    <IdeasAdd />
+            <IdeasAdd />
 
-        {
-        userList.map((userIdea,index) => (
-            <div key={index}>
-                <p>{userIdea.ideaName}</p>
-                <p>{userIdea.createdAt}</p>
-                <p>{userIdea.createdBy.userEmail}</p>
-                <p>{userIdea.userLikes}</p>
-                </div>
+            {
+                user.map((profile, index) => {
+                    return (
+                        <div key={index}>
+                            <p>{profile.ideaName}</p>
+                            <p>{profile.createdAt}</p>
+                            <p>{profile.createdBy.userEmail}</p>
+                            <p>{profile.ideaLikes}</p>
+                            <p>{profile.ideaLikes.length}</p>
+                        </div>
+                    )
+                }
+                )
+            }
 
-        )
-        )
-        
-        
+        </div>
 
-    }
-
-</div>
-
-)
+    )
 
 }
 

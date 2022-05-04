@@ -9,6 +9,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 const OneIdea = (props) => {
 
     const { socket } = props;
+    const { ideas, setIdeas } = props;
     const [oneIdea, setOneIdea] = useState({});
     const [replyList, setReplyList] = useState([]);
     const [content, setContent] = useState("");
@@ -29,11 +30,12 @@ const OneIdea = (props) => {
                 console.log("fail")
             })
     }, [id])
+    
 
     const addAReply = () => {
         axios.post(`http://localhost:8000/api/replies/${id}`,
             {
-                content, 
+                content,
                 reply: id
             })
             .then((res) => {
@@ -78,17 +80,16 @@ const OneIdea = (props) => {
     return (
         <div style={{ textAlign: "center" }}>
 
-                    <div>
-                        <p>{oneIdea.ideaName}</p>
-                    </div>
-                    
+            <div>
+                <p>{oneIdea.ideaName}</p>
+                <p>{ideas.ideaLikes}</p>
+            </div>
+            {/* <button className="mainButton likeButton" onClick={() => likeIdea(ideas._id, user.userName)}> {user.userName} {ideas.ideaLikes.length} some love</button> */}
 
             <div>
-
                 <input type="text" value={content} onChange={(e) => setContent(e.target.value)} />
 
                 <button onClick={addAReply}>Add reply</button>
-
                 {
                     replyList ?
                         replyList.map((reply, index) => (
@@ -102,7 +103,7 @@ const OneIdea = (props) => {
 
             </div>
 
-        </div>
+</div>
     )
 }
 

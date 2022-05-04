@@ -45,10 +45,20 @@ function App() {
 
           <Route element={<IdeasAdd
           />} path="/new" />
+
           <Route element={<Profile
+            ideas={ideas}
+            setIdeas={setIdeas}
+            user={user}
+            setUser={setUser}
+            replyList={replyList}
+            setReplyList={setReplyList}
+            ideaLikes={ideaLikes}
+            setIdeaLikes={setIdeaLikes}
           />} path="/user/profile/:userName"
           />
-          <Route element={<OneIdea 
+          
+          <Route element={<OneIdea
             socket={socket}
             ideas={ideas}
             setIdeas={setIdeas}
