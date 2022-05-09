@@ -17,6 +17,11 @@ const RepliesSchema = new mongoose.Schema({
         ref: "Idea"
     }
 
+    // createdBy: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "User"
+    // }
+
 
 
 }, { timestamps: true })

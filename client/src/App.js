@@ -7,6 +7,7 @@ import Profile from "./components/Profile"
 import OneIdea from "./components/OneIdea"
 import LogReg from "./views/LogReg"
 import io from 'socket.io-client';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
 
@@ -47,6 +48,10 @@ function App() {
           />} path="/home" />
 
           <Route element={<IdeasAdd
+            ideas={ideas}
+            setIdeas={setIdeas}
+            user={user}
+            setUser={setUser}
           />} path="/new" />
 
           <Route element={<Profile
@@ -54,12 +59,12 @@ function App() {
             setIdeas={setIdeas}
             user={user}
             setUser={setUser}
-            replyList={replyList}
-            setReplyList={setReplyList}
-            ideaLikes={ideaLikes}
-            setIdeaLikes={setIdeaLikes}
-            ideaLikesForUser={ideaLikesForUser}
-            setIdeaLikesForUser={setIdeaLikesForUser}
+            // replyList={replyList}
+            // setReplyList={setReplyList}
+            // ideaLikes={ideaLikes}
+            // setIdeaLikes={setIdeaLikes}
+            // ideaLikesForUser={ideaLikesForUser}
+            // setIdeaLikesForUser={setIdeaLikesForUser}
           />} path="/user/profile/:userName"
           />
 

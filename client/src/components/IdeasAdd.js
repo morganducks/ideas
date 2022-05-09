@@ -1,14 +1,35 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate,useParams } from 'react-router-dom'
 import axios from 'axios'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button';
+// import Container from 'react-bootstrap/Container';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
 
 const IdeasAdd = (props) => {
 
     const {ideas, setIdeas} = props;
-
-    const navigate = useNavigate();
-
+    // const [ userId, setUserId ] = useState({});
+    // const navigate = useNavigate();
     const [ideaName, setIdeaName] = useState("");
+    const { id } = useParams();
+    const { user, setUser } = props;
+
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/user/`,
+            { withCredentials: true }
+        )
+            .then((res) => {
+                console.log(res.data);
+                setUser(res.data);
+                // console.log(userId + " user pull")
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
+
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -23,7 +44,6 @@ const IdeasAdd = (props) => {
                 console.log(res.data);
                 setIdeas("")
                 setIdeaName("")
-                navigate("/home")
             })
             .catch((err) => {
                 console.log(err)
@@ -37,17 +57,16 @@ const IdeasAdd = (props) => {
 
     return (
         <div>
-            <div className="addButtonRow">
-                <h2>What's your idea?</h2>
+            <div className="addIdeaContainer">
+            <div>
+                <h2>Welcome userName here! What's your idea?</h2>
             </div>
-            <form className="formContainer" onSubmit={submitHandler}>
-                <div className="addButtonRow">
-
-                </div>
+            <Form className="formContainer" onSubmit={submitHandler}>
                 <div className="ideasRow">
-                    <h3></h3>
-                    <input value={ideaName} type="text" name="Name" placeholder="Enter your idea" onChange={(e) => setIdeaName(e.target.value)}
+                    <Form.Group>
+                    <Form.Control as="textarea" value={ideaName} rows="5" columns="8" placeholder="Enter your idea" onChange={(e) => setIdeaName(e.target.value)}
                     />
+                    </Form.Group>
                     {/* <br />
                             {
                                 errors.ideaName ?
@@ -56,8 +75,9 @@ const IdeasAdd = (props) => {
                             } */}
 
                 </div>
-                <button className="mainButton" style={{ marginRight: "30px" }}>Add idea</button>
-            </form>
+                <Button type="submit" className="mainButton">Add idea</Button>
+            </Form>
+            </div>
         </div>
 
     )

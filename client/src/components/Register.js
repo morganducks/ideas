@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react'
 import axios from 'axios'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button';
 
 const Register = (props) => {
     //source: lecture
@@ -10,11 +12,11 @@ const Register = (props) => {
     const [errors, setErrors] = useState({})
 
     const [user, setUser] = useState({
+        name: "",
         userName: "",
         userEmail: "",
         userPassword: "",
         confirmUserPassword: "",
-        userLikes: 0
     })
 
     const changeHandler = (e) => {
@@ -51,43 +53,54 @@ const Register = (props) => {
 
     return (
         <div>
-            {registrationConfirmed ? <h3>{registrationConfirmed}</h3> : null}
-            <form onSubmit={registering}>
-                <div>
-                <label>Username</label>
-                <input type="text" name="userName" value={user.userName}
-                    onChange={changeHandler}
-                />
-                </div>
-                <div>
-                <label>email</label>
-                <input type="email" name="userEmail" value={user.userEmail}
-                    onChange={changeHandler}
-                />
-                </div>
-                <div>
-                <label>Password</label>
-                                <input type="text" name="userPassword" value={user.userPassword}
-                    onChange={changeHandler}
-                />
-                </div>
-                <div>
-                <label>Confirm Password</label>
-                {errors.confirmUserPassword ? (
-                        <span className="">
-                            {errors.user.message}
-                        </span>
-                    ) : null}
-                                <input type="text" name="confirmUserPassword" value={user.confirmUserPassword}
-                    onChange={changeHandler}
-                />
-</div>
-<button>Submit</button>
+            <div class="formContainer">
+                <h2>Not already a member? Sign up</h2>
+                {registrationConfirmed ? <h3>{registrationConfirmed}</h3> : null}
+                <Form onSubmit={registering}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Control
+                            required
+                            type="name" placeholder="Enter name" type="text" name="userName" value={user.name}
+                            onChange={changeHandler} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Control
+                            required
+                            type="username" placeholder="Enter username" type="text" name="userName" value={user.userName}
+                            onChange={changeHandler} />
+                    </Form.Group>
+
+
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Control placeholder="Enter email" type="email" name="userEmail" value={user.userEmail}
+                            onChange={changeHandler}
+                        />
+
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                        <Form.Control type="text" placeholder="Enter password" name="userPassword" value={user.userPassword}
+                            onChange={changeHandler}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                        {errors.confirmUserPassword ? (
+                            <span className="">
+                                {errors.user.message}
+                            </span>
+                        ) : null}
+                        <Form.Control type="text" name="confirmUserPassword" placeholder="Confirm password" value={user.confirmUserPassword}
+                            onChange={changeHandler}
+                        />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">Submit</Button>
 
 
 
 
-            </form>
+                </Form>
+            </div>
         </div>
 
     )

@@ -1,5 +1,6 @@
 const Reply = require('../models/replies.model');
-const Movie = require('../models/idea.model');
+const Idea = require('../models/idea.model');
+const User = require('../models/user.model')
 
 
 
@@ -27,7 +28,7 @@ module.exports = {
             .then((replyPosted)=>{
                 console.log(replyPosted);
                 
-                Movie.findOneAndUpdate({_id: req.params.id},
+                Reply.findOneAndUpdate({_id: req.params.id},
                     {
                         $addToSet: {replies: replyPosted._id}
                     },

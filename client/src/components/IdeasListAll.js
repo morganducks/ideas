@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import IdeasAdd from "../components/IdeasAdd"
 import oneIdea from "../components/OneIdea"
-
+import Button from 'react-bootstrap/Button';
 
 const IdeasListAll = (props) => {
     const { ideas, setIdeas } = props;
@@ -12,7 +12,7 @@ const IdeasListAll = (props) => {
     const { id } = useParams();
     const { userName } = useParams();
     const { ideaLikes, setIdeaLikes } = props;
-    const {ideaLikesForUser, setIdeaLikesForUser} = props;
+    // const {ideaLikesForUser, setIdeaLikesForUser} = props;
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas`,
@@ -92,57 +92,62 @@ const IdeasListAll = (props) => {
                     .catch((err) => {
                         console.log(err)
                     })
-                    
+
             })
     }
 
     return (
         <div>
-
-            Some text
+            <div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
+                <div className="homeHero">
+                    <h1 className="heroText home"><Link to="/home">Big Bottom Big Board</Link></h1>
+                </div>
+            </div>
             <IdeasAdd />
-            {
-                ideas.slice(0).reverse().map((idea, index) => {
-                    return (
-                        <div className="listContainerHome" key={idea._id}>
-                            <Link to={`/ideas/${idea._id}`}>{idea.ideaName}</Link>
-                            <p>{idea.createdAt}</p>
-
-                            <Link to={`/ideas/${idea._id}`}>{idea._id}</Link>
-                            {idea.replies.map((postReply) => {
-                                return (
-                                    <div key={postReply._id}>
-                                        <p>{postReply.content}</p>
+            <div className="homeListContainer">
+                {
+                    ideas.slice(0).reverse().map((idea, index) => {
+                        return (
+                            
+                            <div className="listContainerHome" key={idea._id}>
+                                <div className="userText">Posted by <Link to={`/user/profile/${idea.createdBy?.userName}`}>{idea.createdBy?.userName}</Link> at {idea.createdAt}
+                                </div>
+                                
+                                    <div className="postText">{idea.ideaName}
                                     </div>
+                                    <div className="likeButtonContainer">
+                                        <div className="likeButton">
+                                            <Button onClick={() => likeIdea(idea._id, user.userName)}>Like idea ({idea.ideaLikes.length})</Button>
+                                        </div>
+                                        <div className="likeButtonLikes">
+                                            {/* <p>{user._id} user id</p> */}
+                                            <div className="likedByText">Liked By: {idea.ideaLikes + ""}</div>
+                                        </div>
+                                    <div className="likeIdeaViewIdea">
+                                    <Button href={`/ideas/${idea._id}`}>View Idea</Button>
+                                    </div>
+                                    </div>
+                                    
+
+
+                                    
+
+                                    </div>
+
+                                
+
+
+
+
                                 )
-                            })}
-                            <p>{idea.replies?.length} replies</p>
-                            <br />
-                            <Link to={`/user/profile/${idea.createdBy?.userName}`}>{idea.createdBy?.userName}</Link>
-
-                            <button className="mainButton likeButton" onClick={() => likeIdea(idea._id, user.userName)}> {user.userName} {idea.ideaLikes.length} some love</button>
-
-                            <p>{user._id} user id</p>
-                            <p>{idea.ideaLikes} users who have liked this</p>
-
-                            <div>
-
+                    })
+                }
                             </div>
-                            <button className="mainButton" onClick={() => deleteIdea(idea._id)}>Delete</button>
-                        </div>
-
-
-
-
-                    )
-                })
-            }
-
         </div>
 
 
-    )
+            )
 
 }
 
-export default IdeasListAll;
+            export default IdeasListAll;
