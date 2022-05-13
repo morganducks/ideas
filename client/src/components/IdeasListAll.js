@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import IdeasAdd from "../components/IdeasAdd"
-import oneIdea from "../components/OneIdea"
 import Button from 'react-bootstrap/Button';
 
 const IdeasListAll = (props) => {
@@ -11,8 +10,7 @@ const IdeasListAll = (props) => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { userName } = useParams();
-    const { ideaLikes, setIdeaLikes } = props;
-    // const {ideaLikesForUser, setIdeaLikesForUser} = props;
+    const [ ideaLikes, setIdeaLikes ] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas`,
@@ -43,30 +41,22 @@ const IdeasListAll = (props) => {
             })
     }, [])
 
-    useEffect(() => {
-        axios.get("http://localhost:8000/api/replies",
-            { withCredentials: true }
-        )
-            .then((res) => {
-                console.log(res.data);
-            })
+    // useEffect(() => {
+    //     axios.get("http://localhost:8000/api/replies",
+    //         { withCredentials: true }
+    //     )
+    //         .then((res) => {
+    //             console.log(res.data);
+    //         })
 
-            .catch((err) => {
-                console.log(err);
-            })
-    }, [])
+    //         .catch((err) => {
+    //             console.log(err);
+    //         })
+    // }, [])
 
     //chain put request to then and then to put to multiple databases.
 
-    const deleteIdea = (idFromBelow) => {
-        axios.delete(`http://localhost:8000/api/ideas/${idFromBelow}`)
-            .then((res) => {
-                console.log(res.data);
-                setIdeas(ideas.filter(ideas => ideas._id !== idFromBelow))
-                navigate("/home")
-            })
-            .catch((err) => { console.log(err) });
-    }
+
 
     const likeIdea = (idea, user) => {
         axios.get(`http://localhost:8000/api/ideas/${idea}`)
@@ -83,17 +73,15 @@ const IdeasListAll = (props) => {
                     .then((res) => {
                         console.log(res.data);
                         setIdeaLikes(res.data);
-                        console.log(res.data.ideaLikes + " idea")
                         console.log("edited")
-                        // setIdeaLikesForUser(res.data.ideaLikes +1);
-                        // console.log(ideaLikesForUser +"userlikes");
-                        // event.target.disabled = true;
+                        
                     })
                     .catch((err) => {
                         console.log(err)
                     })
 
             })
+            // window.location.reload(false);
     }
 
     return (
@@ -129,6 +117,7 @@ const IdeasListAll = (props) => {
                                     </div>
                                     
 
+                                
 
                                     
 

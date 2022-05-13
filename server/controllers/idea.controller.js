@@ -68,7 +68,7 @@ findIdeasByUser: (req, res) => {
         
         Idea.find({createdBy: req.jwtPayload.id})
             .populate("createdBy", "userName userEmail")
-            .populate("replies", "content _id likes")
+            // .populate("replies", "content _id likes")
             .then((ideasFromLoggedUser) => {
                 console.log(ideasFromLoggedUser)
                 res.json(ideasFromLoggedUser)
@@ -113,7 +113,7 @@ deleteIdea: (req, res) => {
 
         oneIdea: (req, res) => {   
         Idea.findOne({ _id: req.params.id })
-        .populate("replies", "content likes")
+        .populate("createdBy", "userName userEmail")
         .populate("ideaLikes", "ideaId ideaName")
             .then((viewIdeas) => {
                 res.json(viewIdeas)

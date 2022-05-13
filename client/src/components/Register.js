@@ -36,6 +36,7 @@ const Register = (props) => {
             .then((res) => {
                 console.log(res.data)
                 setUser({
+                    name: "",
                     userName: "",
                     userEmail: "",
                     userPassword: "",
@@ -53,20 +54,20 @@ const Register = (props) => {
 
     return (
         <div>
-            <div class="formContainer">
+            <div class="regFormContainer">
                 <h2>Not already a member? Sign up</h2>
                 {registrationConfirmed ? <h3>{registrationConfirmed}</h3> : null}
                 <Form onSubmit={registering}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Control
                             required
-                            type="name" placeholder="Enter name" type="text" name="userName" value={user.name}
+                            type="username" placeholder="Enter your name" type="text" name="name" value={user.name}
                             onChange={changeHandler} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Control
                             required
-                            type="username" placeholder="Enter username" type="text" name="userName" value={user.userName}
+                            type="username" placeholder="Enter your username" type="text" name="userName" value={user.userName}
                             onChange={changeHandler} />
                     </Form.Group>
 

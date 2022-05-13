@@ -9,13 +9,14 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 const OneIdea = (props) => {
 
     // const { socket } = props;
-    // const { ideas, setIdeas } = props;
+    const { ideas, setIdeas } = props;
     const [oneIdea, setOneIdea] = useState({});
     const { user, setUser } = props;
     // const [replyList, setReplyList] = useState([]);
     // const [content, setContent] = useState("");
     // const navigate = useNavigate();
     const { id } = useParams();
+    const [ideaOwner,setIdeaOwner] = useState("")
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/user/`,
@@ -24,28 +25,32 @@ const OneIdea = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setUser(res.data)
-                console.log(user.userName + " user pull")
+                // console.log(user.userName + " user pull")
             })
             .catch((err) => {
                 console.log(err);
             })
     }, [])
 
+
+    //async
+    //can use map on array, cannot map object
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas/${id}`)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
                 setOneIdea(res.data);
+                // setIdeaLikes(res.data.ideaLikes)
                 // setReplyList(res.data.replies);
-
-                console.log(oneIdea.ideaLikes)
+                // console.log(oneIdea.ideaLikes)
             })
             .catch((err) => {
                 console.log(err)
                 console.log("fail")
             })
     }, [id])
+
 
     //from course code
     // const addAReply = () => {
@@ -93,33 +98,45 @@ const OneIdea = (props) => {
     //         })
     // }
 
-    const result = Object.keys(oneIdea).map(key => {
-        console.log(key); // 👉️ name, country
-        console.log(oneIdea[key]); // 👉️ James, Chile
-      
-        return {[key]: oneIdea[key]};
-      });
+    // const result = Object.keys(oneIdea).map(key => {
+    //     console.log(key);
+    //     console.log(oneIdea[key]);
+
+    //     return {[key]: oneIdea[key]};
+    //   });
 
 
-      console.log(result)
+    //   console.log(result)
 
-      const userMap = Object.keys(user).map(key => {
-        console.log(key); 
-        console.log(user[key]);
-        return {[key]: user[key]};
-      });
+    //   const userMap = Object.keys(user).map(key => {
+    //     console.log(key); 
+    //     console.log(user[key]);
+    //     return {[key]: user[key]};
+    //   });
 
 
-      console.log(userMap)
+    //   console.log(userMap)
 
 
     return (
         <div style={{ textAlign: "center" }}>
 
-                <p>{oneIdea.ideaName}</p>
-                <p>{userMap.username}</p>
-                {/* <p>{oneIdea.createdAt}</p> */}
-            </div>
+            <p>{oneIdea.ideaName}</p>
+            <p>{oneIdea.createdBy?.userName}</p>
+            <p>{oneIdea.createdAt}</p>
+            <p>{oneIdea?.ideaLikes?.length}</p>
+            {
+                oneIdea?.ideaLikes?.map((likes, index) => {
+                    return(
+                    <div key={index}>
+                        <p>{likes}</p>
+                        
+                    </div>
+                    )
+                }
+                )
+}
+        </div>
 
 
 

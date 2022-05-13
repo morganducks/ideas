@@ -5,6 +5,7 @@ import IdeasListAll from "./components/IdeasListAll"
 import IdeasAdd from "./components/IdeasAdd"
 import Profile from "./components/Profile"
 import OneIdea from "./components/OneIdea"
+import Delete from "./components/Delete"
 import LogReg from "./views/LogReg"
 import io from 'socket.io-client';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -12,10 +13,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 function App() {
 
   const [ideas, setIdeas] = useState([]);
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState({})
   const [socket, setSocket] = useState(() => io(":8000"))
   const [replyList, setReplyList] = useState([]);
-  const [ideaLikes, setIdeaLikes] = useState([])
+  // const [ideaLikes, setIdeaLikes] = useState([])
   const [ideaLikesForUser, setIdeaLikesForUser] = useState(0)
 
 
@@ -40,8 +41,8 @@ function App() {
             setUser={setUser}
             replyList={replyList}
             setReplyList={setReplyList}
-            ideaLikes={ideaLikes}
-            setIdeaLikes={setIdeaLikes}
+            // ideaLikes={ideaLikes}
+            // setIdeaLikes={setIdeaLikes}
             ideaLikesForUser={ideaLikesForUser}
             setIdeaLikesForUser={setIdeaLikesForUser}
             socket={socket}
@@ -74,9 +75,23 @@ function App() {
             setIdeas={setIdeas}
             replyList={replyList}
             setReplyList={setReplyList}
-            ideaLikes={ideaLikes}
-            setIdeaLikes={setIdeaLikes}
+            user={user}
+            setUser={setUser}
           />} path="/ideas/:id" />
+
+<Route element={<Delete
+            ideas={ideas}
+            setIdeas={setIdeas}
+            user={user}
+            setUser={setUser}
+            // replyList={replyList}
+            // setReplyList={setReplyList}
+            // ideaLikes={ideaLikes}
+            // setIdeaLikes={setIdeaLikes}
+            // ideaLikesForUser={ideaLikesForUser}
+            // setIdeaLikesForUser={setIdeaLikesForUser}
+          />} path="/user/profile/:userName"
+          />
         </Routes>
       </div>
     </BrowserRouter>

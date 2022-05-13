@@ -13,22 +13,10 @@ const IdeasAdd = (props) => {
     // const [ userId, setUserId ] = useState({});
     // const navigate = useNavigate();
     const [ideaName, setIdeaName] = useState("");
+    const [userGreeting, setUserGreeting] = useState("");
     const { id } = useParams();
     const { user, setUser } = props;
 
-    useEffect(() => {
-        axios.get(`http://localhost:8000/api/user/`,
-            { withCredentials: true }
-        )
-            .then((res) => {
-                console.log(res.data);
-                setUser(res.data);
-                // console.log(userId + " user pull")
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }, [])
 
 
     const submitHandler = (e) => {
@@ -55,11 +43,26 @@ const IdeasAdd = (props) => {
         window.location.reload(false);
     }
 
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/user/`,
+            { withCredentials: true }
+        )
+            .then((res) => {
+                console.log(res.data);
+                setUserGreeting(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
+
+
+
     return (
         <div>
             <div className="addIdeaContainer">
             <div>
-                <h2>Welcome userName here! What's your idea?</h2>
+                <h2>Welcome {userGreeting.name}! What's your idea?</h2>
             </div>
             <Form className="formContainer" onSubmit={submitHandler}>
                 <div className="ideasRow">

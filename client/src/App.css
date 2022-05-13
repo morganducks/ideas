@@ -61,6 +61,11 @@
   margin: auto;
 }
 
+.regFormContainer {
+  max-width: 50%;
+  margin: auto;
+}
+
 .addIdeaContainer {
   width: 50%;
   margin: 0 auto 30px auto;
