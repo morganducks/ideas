@@ -12,11 +12,7 @@ const OneIdea = (props) => {
     const { ideas, setIdeas } = props;
     const [oneIdea, setOneIdea] = useState({});
     const { user, setUser } = props;
-    // const [replyList, setReplyList] = useState([]);
-    // const [content, setContent] = useState("");
-    // const navigate = useNavigate();
     const { id } = useParams();
-    const [ideaOwner,setIdeaOwner] = useState("")
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/user/`,
@@ -41,9 +37,6 @@ const OneIdea = (props) => {
                 console.log(res);
                 console.log(res.data);
                 setOneIdea(res.data);
-                // setIdeaLikes(res.data.ideaLikes)
-                // setReplyList(res.data.replies);
-                // console.log(oneIdea.ideaLikes)
             })
             .catch((err) => {
                 console.log(err)
@@ -119,23 +112,30 @@ const OneIdea = (props) => {
 
 
     return (
-        <div style={{ textAlign: "center" }}>
-
-            <p>{oneIdea.ideaName}</p>
-            <p>{oneIdea.createdBy?.userName}</p>
+        <div>
+<div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
+                <div className="homeHero">
+                    <h1 className="heroText home"><Link to="/home">Big Bottom Big Board</Link></h1>
+                </div>
+            </div>
+            <div className="homeListContainer">
+            <div className="userText">Posts by {oneIdea.createdBy?.userName}</div>
+            <div className="postText">{oneIdea.ideaName}</div>
+            
             <p>{oneIdea.createdAt}</p>
             <p>{oneIdea?.ideaLikes?.length}</p>
             {
                 oneIdea?.ideaLikes?.map((likes, index) => {
                     return(
                     <div key={index}>
-                        <p>{likes}</p>
-                        
+                        <p><Link to={`/user/profile/${likes}`}>{likes}</Link></p>
+                        <p>{likes.name}</p>
                     </div>
                     )
                 }
                 )
 }
+        </div>
         </div>
 
 

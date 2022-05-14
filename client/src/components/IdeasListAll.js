@@ -10,7 +10,7 @@ const IdeasListAll = (props) => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { userName } = useParams();
-    const [ ideaLikes, setIdeaLikes ] = useState([]);
+    const [ideaLikes, setIdeaLikes] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas`,
@@ -74,14 +74,14 @@ const IdeasListAll = (props) => {
                         console.log(res.data);
                         setIdeaLikes(res.data);
                         console.log("edited")
-                        
+
                     })
                     .catch((err) => {
                         console.log(err)
                     })
 
             })
-            // window.location.reload(false);
+        // window.location.reload(false);
     }
 
     return (
@@ -96,47 +96,36 @@ const IdeasListAll = (props) => {
                 {
                     ideas.slice(0).reverse().map((idea, index) => {
                         return (
-                            
+
                             <div className="listContainerHome" key={idea._id}>
                                 <div className="userText">Posted by <Link to={`/user/profile/${idea.createdBy?.userName}`}>{idea.createdBy?.userName}</Link> at {idea.createdAt}
                                 </div>
-                                
-                                    <div className="postText">{idea.ideaName}
+
+                                <div className="postText">{idea.ideaName}
+                                </div>
+                                <div className="likeButtonContainer">
+                                    <div className="likeButton">
+                                        <Button onClick={() => likeIdea(idea._id, user.userName, user._id)}>Like idea ({idea.ideaLikes.length})</Button>
                                     </div>
-                                    <div className="likeButtonContainer">
-                                        <div className="likeButton">
-                                            <Button onClick={() => likeIdea(idea._id, user.userName)}>Like idea ({idea.ideaLikes.length})</Button>
-                                        </div>
-                                        <div className="likeButtonLikes">
-                                            {/* <p>{user._id} user id</p> */}
-                                            <div className="likedByText">Liked By: {idea.ideaLikes + ""}</div>
-                                        </div>
+                                    <div className="likeButtonLikes">
+                                        {/* <p>{user._id} user id</p> */}
+                                        <div className="likedByText">Liked By: {idea.ideaLikes + ""}</div>
+                                    </div>
                                     <div className="likeIdeaViewIdea">
-                                    <Button href={`/ideas/${idea._id}`}>View Idea</Button>
+                                        <Button href={`/ideas/${idea._id}`}>View Idea</Button>
                                     </div>
-                                    </div>
-                                    
+                                </div>
+                            </div>
 
-                                
-
-                                    
-
-                                    </div>
-
-                                
-
-
-
-
-                                )
+                        )
                     })
                 }
-                            </div>
+            </div>
         </div>
 
 
-            )
+    )
 
 }
 
-            export default IdeasListAll;
+export default IdeasListAll;

@@ -1,5 +1,5 @@
 .heroImage {
-  background-image: url('http://www.paulmorgandesigns.com/images/69149210_10219567360518340_6410013212086894592_n.jpg');
+  background-image: url('http://www.paulmorgandesigns.com/images/BB-hero.jpg');
   top: 0px;
   background-size: cover;
   height: 520px;
@@ -10,10 +10,10 @@
 }
 
 .homeHero {
-  background-image: url('http://www.paulmorgandesigns.com/images/40809_421410048541_2102941_n.jpg');
+  background-image: url('http://www.paulmorgandesigns.com/images/BB-hero.jpg');
   top: 0px;
   background-size:cover;
-  height: 300px;
+  height: 500px;
   background-position-y: center;
   position: relative;
   margin-bottom: 40px;
@@ -54,6 +54,13 @@
   width: 50% !important;
   margin-top: -75px;
   z-index: 5000;
+}
+
+.loginErrorMessage {
+  text-align: center;
+  max-width: 50%;
+  font-weight: 700;
+  margin: auto;
 }
 
 .formContainer {

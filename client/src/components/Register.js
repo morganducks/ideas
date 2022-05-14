@@ -48,15 +48,16 @@ const Register = (props) => {
             .catch((err) => {
                 console.log(err)
                 setErrors(err.response.data.errors)
+                alert("password must be at least 8 characters and passwords must match")
             })
     }
 
 
     return (
         <div>
-            <div class="regFormContainer">
+            <div className="regFormContainer">
                 <h2>Not already a member? Sign up</h2>
-                {registrationConfirmed ? <h3>{registrationConfirmed}</h3> : null}
+                
                 <Form onSubmit={registering}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Control
@@ -86,21 +87,17 @@ const Register = (props) => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
 
-                        {errors.confirmUserPassword ? (
-                            <span className="">
-                                {errors.user.message}
-                            </span>
-                        ) : null}
                         <Form.Control type="text" name="confirmUserPassword" placeholder="Confirm password" value={user.confirmUserPassword}
                             onChange={changeHandler}
                         />
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>
-
+                    {registrationConfirmed ? <p>{registrationConfirmed}</p> : null}
 
 
 
                 </Form>
+                {/* <p>{errors}</p> */}
             </div>
         </div>
 

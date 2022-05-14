@@ -32,7 +32,7 @@ const Login = (props) => {
             })
             .catch((err) => {
                 console.log(err.response.data);
-                setErrorMessage(err.response.data.message);
+                setErrorMessage("Username or password incorrect");
             })
     }
 
@@ -43,9 +43,11 @@ const Login = (props) => {
                     <h1 className="heroText"><Link to="/home">Big Bottom Festival</Link></h1>
                 </div>
             </div>
-
+            
             <Container max-width="md" className="loginContainer">
+            
                 <Row>
+                
                 <Form onSubmit={login}>
 <Row>
     <Col xs lg="4">
@@ -75,11 +77,14 @@ const Login = (props) => {
                             <Button style={{ width:"100%" }}variant="primary" type="submit">Sign in</Button>
                         </Form.Group>
                         </Col>
+                        
                         </Row>
-
+                        <p className="loginErrorMessage">{errorMessage ? errorMessage : ""}</p>
                 </Form>
                 </Row>
+                
             </Container>
+            
         </div>
 
     )

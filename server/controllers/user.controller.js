@@ -20,9 +20,8 @@ module.exports = {
                 console.log(newUser)
             })
             .catch((err) => {
-                res.status(400).json(err);
+                res.status(400).json({message: "registration"});
                 console.log("Register not successful")
-                // res.json({ message: "Password must be at least 8 characters", error: err })
             })
     },
 
