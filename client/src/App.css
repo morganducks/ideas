@@ -30,7 +30,7 @@
 }
 
 .heroText .home {
-  font-size: 80px;
+  font-size: 100px;
   color: white;
   /* position: absolute; */
   padding-top: 190px;
@@ -83,6 +83,10 @@
 .homeListContainer {
   width: 50%;
   margin: auto;
+}
+
+h1 {
+  text-align: center;
 }
 
 h2 {

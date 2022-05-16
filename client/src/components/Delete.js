@@ -22,6 +22,7 @@ const Delete = (props) => {
     }, [])
 
     const deleteIdea = (idFromBelow) => {
+        // check for idea want to delete to make sure the current user createdBy
         axios.delete(`http://localhost:8000/api/users/${idFromBelow}`)
             .then((res) => {
                 console.log(res.data);
@@ -31,7 +32,7 @@ const Delete = (props) => {
     }
 
     return (
-        <button className="mainButton" onClick={() => deleteIdea(user._id)}>Delete</button>
+        <button className="mainButton" onClick={() => deleteIdea(user.createdBy?._id)}>Delete</button>
     )
 
 }

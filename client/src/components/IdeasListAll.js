@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import IdeasAdd from "../components/IdeasAdd"
 import Button from 'react-bootstrap/Button';
+// import Delete from 
 
 const IdeasListAll = (props) => {
     const { ideas, setIdeas } = props;
@@ -10,7 +11,7 @@ const IdeasListAll = (props) => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { userName } = useParams();
-    const [ideaLikes, setIdeaLikes] = useState([]);
+    const { ideaLikes, setIdeaLikes } = props;
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/ideas`,
@@ -67,19 +68,21 @@ const IdeasListAll = (props) => {
                 updateLikes.ideaLikes.push(user);
                 const finalLikes = [...new Set(updateLikes.ideaLikes)]
                 updateLikes.ideaLikes = finalLikes;
+                // console.log(updateLikes)
                 axios.put(`http://localhost:8000/api/ideas/${idea}`,
                     updateLikes
                 )
                     .then((res) => {
-                        console.log(res.data);
-                        setIdeaLikes(res.data);
-                        console.log("edited")
-
+                        // console.log(ideas)
+                        // console.log(res.data.ideaLikes);
+                        // setIdeas(res.data)
+                        // setIdeas(res.data.ideaLikes);
+                        // console.log("edited")
+                        // setIdeas({...setIdeas})
                     })
                     .catch((err) => {
                         console.log(err)
                     })
-
             })
         // window.location.reload(false);
     }
@@ -88,16 +91,18 @@ const IdeasListAll = (props) => {
         <div>
             <div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
                 <div className="homeHero">
-                    <h1 className="heroText home"><Link to="/home">Big Bottom Big Board</Link></h1>
+                    <h1 className="heroText home">Big Bottom Big Board</h1>
+                    <h2 style={{ color: "white", marginTop: "20px" }}>Where we collaborate on the Big Bottom Festival</h2>
                 </div>
             </div>
             <IdeasAdd />
             <div className="homeListContainer">
+
                 {
                     ideas.slice(0).reverse().map((idea, index) => {
                         return (
 
-                            <div className="listContainerHome" key={idea._id}>
+                            <div className="listContainerHome" key={idea}>
                                 <div className="userText">Posted by <Link to={`/user/profile/${idea.createdBy?.userName}`}>{idea.createdBy?.userName}</Link> at {idea.createdAt}
                                 </div>
 
@@ -105,21 +110,28 @@ const IdeasListAll = (props) => {
                                 </div>
                                 <div className="likeButtonContainer">
                                     <div className="likeButton">
-                                        <Button onClick={() => likeIdea(idea._id, user.userName, user._id)}>Like idea ({idea.ideaLikes.length})</Button>
+                                        
+                                        <Button onClick={() => likeIdea(idea._id, user.userName)}>Like idea ({idea.ideaLikes?.length})</Button>
                                     </div>
+                                    
                                     <div className="likeButtonLikes">
-                                        {/* <p>{user._id} user id</p> */}
+                                        
                                         <div className="likedByText">Liked By: {idea.ideaLikes + ""}</div>
                                     </div>
                                     <div className="likeIdeaViewIdea">
                                         <Button href={`/ideas/${idea._id}`}>View Idea</Button>
                                     </div>
+                                    {/* <Delete /> */}
                                 </div>
                             </div>
 
                         )
                     })
                 }
+                
+                <div style={{marginBottom: "40px", textAlign: ""}}>
+                <Link to="/home">Home</Link>  |  <Link to="logout">Log out</Link>
+                </div>
             </div>
         </div>
 

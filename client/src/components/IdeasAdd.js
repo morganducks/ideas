@@ -70,14 +70,7 @@ const IdeasAdd = (props) => {
                     <Form.Control as="textarea" value={ideaName} rows="5" columns="8" placeholder="Enter your idea" onChange={(e) => setIdeaName(e.target.value)}
                     />
                     </Form.Group>
-                    {/* <br />
-                            {
-                                errors.ideaName ?
-                                    <span className="errorMessage">{errors.ideaName.message}</span>
-                                    : null
-                            } */}
-
-                </div>
+               </div>
                 <Button type="submit" className="mainButton">Add idea</Button>
             </Form>
             </div>

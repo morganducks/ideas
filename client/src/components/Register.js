@@ -92,7 +92,7 @@ const Register = (props) => {
                         />
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>
-                    {registrationConfirmed ? <p>{registrationConfirmed}</p> : null}
+                    {registrationConfirmed ? <p style={{ marginTop: "20px", marginBottom: "50px", fontWeight:"700", textAlign:"center" }}>{registrationConfirmed}</p> : null}
 
 
 

@@ -136,6 +136,9 @@ const OneIdea = (props) => {
                 )
 }
         </div>
+        <div style={{marginBottom: "40px", textAlign: "center"}}>
+                <Link to="/home">Home</Link>  |  <Link to="logout">Log out</Link>
+                </div>
         </div>
 
 

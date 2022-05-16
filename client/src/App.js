@@ -16,9 +16,7 @@ function App() {
   const [user, setUser] = useState({})
   const [socket, setSocket] = useState(() => io(":8000"))
   const [replyList, setReplyList] = useState([]);
-  // const [ideaLikes, setIdeaLikes] = useState([])
-  const [ideaLikesForUser, setIdeaLikesForUser] = useState(0)
-
+  const [ideaLikes, setIdeaLikes] = useState([]);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -41,10 +39,8 @@ function App() {
             setUser={setUser}
             replyList={replyList}
             setReplyList={setReplyList}
-            // ideaLikes={ideaLikes}
-            // setIdeaLikes={setIdeaLikes}
-            ideaLikesForUser={ideaLikesForUser}
-            setIdeaLikesForUser={setIdeaLikesForUser}
+            ideaLikes={ideaLikes}
+            setIdeaLikes={setIdeaLikes}
             socket={socket}
           />} path="/home" />
 
@@ -62,8 +58,8 @@ function App() {
             setUser={setUser}
             // replyList={replyList}
             // setReplyList={setReplyList}
-            // ideaLikes={ideaLikes}
-            // setIdeaLikes={setIdeaLikes}
+            ideaLikes={ideaLikes}
+            setIdeaLikes={setIdeaLikes}
             // ideaLikesForUser={ideaLikesForUser}
             // setIdeaLikesForUser={setIdeaLikesForUser}
           />} path="/user/profile/:userName"
