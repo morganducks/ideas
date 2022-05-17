@@ -232,6 +232,23 @@ align-items: center;
 
 
 @media screen and (max-width: 820px) {
+
+  .col-12 {
+    margin-bottom: 30px;
+  }
+  
+  .loginContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 4px;
+    border: 0px black solid;
+    width: 100% !important;
+    margin-top: 20px;
+    z-index: 5000;
+  }
   .homeHero {
     background-image: url('http://www.paulmorgandesigns.com/images/lights.jpg');
     top: 0px;

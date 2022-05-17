@@ -39,52 +39,55 @@ const Login = (props) => {
     return (
         <div>
             <div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
-                <div className="heroImage">
-                    <h1 className="heroText" style={{color:"black", paddingTop: "30px", textShadow:"0px 0px 40px white", textShadow: "0px 0px 10px white"}}>Big Bottom Festival</h1>
+                <div className="homeHero">
+
+                    <h1 className="heroTextHome home">Big Bottom Big Board</h1>
+                    <h2 style={{ color: "white", marginTop: "20px" }}>Where we collaborate on the Big Bottom Festival</h2>
                 </div>
+
             </div>
-            
+
             <Container max-width="md" className="loginContainer">
-            
+
                 <Row>
-                
-                <Form onSubmit={login}>
-<Row>
-    <Col xs lg="4">
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Control
-                            type="text"
-                            name="userEmail"
-                            placeholder="Enter email"
-                            value={userEmail}
-                            onChange={(e) => setUserEmail(e.target.value)}
-                        />
-                    </Form.Group>
-                    </Col>
-                    <Col xs lg="4">
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Control
-                            type="text"
-                            name="userPassword"
-                            placeholder="Enter password"
-                            value={userPassword}
-                            onChange={(e) => setUserPassword(e.target.value)}
-                        />
-                    </Form.Group>
-                    </Col>
-<Col xs lg="4">
-                        <Form.Group>
-                            <Button style={{ width:"100%" }}variant="primary" type="submit">Sign in</Button>
-                        </Form.Group>
-                        </Col>
-                        
+
+                    <Form onSubmit={login}>
+                        <Row>
+                            <Col xs="12" lg="4">
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.Control
+                                        type="text"
+                                        name="userEmail"
+                                        placeholder="Enter email"
+                                        value={userEmail}
+                                        onChange={(e) => setUserEmail(e.target.value)}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col xs="12" lg="4">
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.Control
+                                        type="text"
+                                        name="userPassword"
+                                        placeholder="Enter password"
+                                        value={userPassword}
+                                        onChange={(e) => setUserPassword(e.target.value)}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col xs="12" lg="4">
+                                <Form.Group>
+                                    <Button style={{ width: "100%" }} variant="primary" type="submit">Sign in</Button>
+                                </Form.Group>
+                            </Col>
+
                         </Row>
                         <p className="loginErrorMessage">{errorMessage ? errorMessage : ""}</p>
-                </Form>
+                    </Form>
                 </Row>
-                
+
             </Container>
-            
+
         </div>
 
     )
