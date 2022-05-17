@@ -40,7 +40,7 @@ const Login = (props) => {
         <div>
             <div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
                 <div className="heroImage">
-                    <h1 className="heroText" style={{color:"black", paddingTop: "30px", textShadow:"0px 0px 40px white", textShadow:"0px 0px 10px white"}}>Big Bottom Festival</h1>
+                    <h1 className="heroText" style={{color:"black", paddingTop: "30px", textShadow:"0px 0px 40px white", textShadow: "0px 0px 10px white"}}>Big Bottom Festival</h1>
                 </div>
             </div>
             
