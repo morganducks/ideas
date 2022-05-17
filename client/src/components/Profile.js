@@ -40,13 +40,13 @@ const Profile = (props) => {
     return (
         <div style={{ marginBottom: "50px" }}>
 
-            <div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
+<div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
                 <div className="homeHero">
-                    <div style={{ paddingTop: "160px" }}>
+              
                         <h1 className="heroTextHome home">Big Bottom Big Board</h1>
                         <h2 style={{ color: "white", marginTop: "20px" }}>Where we collaborate on the Big Bottom Festival</h2>
                     </div>
-                </div>
+ 
             </div>
             <HomeLogout />
             <h1>{userName}'s profile</h1>

@@ -36,14 +36,14 @@ const OneIdea = (props) => {
   
     return (
 <div>
-        <div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
-        <div className="homeHero">
-            <div style={{ paddingTop: "160px" }}>
-                <h1 className="heroTextHome home">Big Bottom Big Board</h1>
-                <h2 style={{ color: "white", marginTop: "20px" }}>Where we collaborate on the Big Bottom Festival</h2>
+<div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
+                <div className="homeHero">
+              
+                        <h1 className="heroTextHome home">Big Bottom Big Board</h1>
+                        <h2 style={{ color: "white", marginTop: "20px" }}>Where we collaborate on the Big Bottom Festival</h2>
+                    </div>
+ 
             </div>
-        </div>
-    </div>
             <div className="homeListContainer">
             <div className="userTextOneIdea">Posted by {oneIdea.createdBy?.userName}</div>
             <p>{oneIdea.createdAt}</p>

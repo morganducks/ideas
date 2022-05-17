@@ -25,6 +25,7 @@
 }
 
 .heroTextHome {
+  padding-top: 44px;
   font-size: 80px;
   color: white;
   /* position: absolute; */
@@ -125,9 +126,9 @@ h2 {
 
 .listContainerHome {
   width: 100%;
-  margin: 40px auto;
+  margin: 50px auto;
   border-bottom: 1px solid black;
-  padding-bottom: 40px;
+  padding-bottom: 50px;
 }
 
 .postText {
@@ -145,6 +146,7 @@ h2 {
 
 .userTextOneIdea {
   font-weight: 700;
+  margin-bottom: 30px;
   font-size: 40px;
   text-align: center;
 }
@@ -252,13 +254,13 @@ align-items: center;
     z-index: -1;
   }
   
-  .heroText {
+  .heroTextHome {
     font-size: 40px;
     margin-left: 10px;
     margin-right: 10px;
     color: white;
     /* position: absolute; */
-    padding-top: 25px;
+    padding-top: 20px;
     display: flex;
     justify-content: center;
   }
