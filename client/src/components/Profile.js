@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import IdeasAdd from "../components/IdeasAdd"
+import HomeLogout from "../components/HomeLogout"
+import LikeButton from "../components/LikeButton"
+import Delete from "../components/Delete"
 import Button from 'react-bootstrap/Button';
-
 
 
 
 const Profile = (props) => {
     const { userName } = useParams();
     const { ideas, setIdeas } = props;
-    const { ideaLikes, setIdeaLikes } = props;
     const { user, setUser } = props;
+    const { idea } = props;
+    const { id } = useParams();
+
 
 
     useEffect(() => {
@@ -20,9 +23,9 @@ const Profile = (props) => {
         )
             .then((res) => {
                 console.log(res.data);
-                // console.log(res.data.createdBy.ideaLikes);
                 setIdeas(res.data);
-                setUser(res.data);
+                setUser(res.data)
+                console.log(userName.userEmail)
             })
             .catch((err) => {
                 console.log(err);
@@ -30,74 +33,70 @@ const Profile = (props) => {
             })
     }, [])
 
-    const likeIdea = (idea, user) => {
-        axios.get(`http://localhost:8000/api/ideas/${idea}`)
-            .then((res) => {
-                console.log(res, user)
-                //help from former Dojo student
-                const updateLikes = { ...res.data };
-                updateLikes.ideaLikes.push(user);
-                const finalLikes = [...new Set(updateLikes.ideaLikes)]
-                updateLikes.ideaLikes = finalLikes;
-                axios.put(`http://localhost:8000/api/ideas/${idea}`,
-                    updateLikes
-                )
-                    .then((res) => {
-                        console.log(res.data);
-                        setIdeaLikes(res.data);
-                        console.log("edited")
-
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
-
-            })
-        // window.location.reload(false);
-    }
 
 
     //loop through records and add all ideaLikes
 
     return (
-        <div>
+        <div style={{ marginBottom: "50px" }}>
 
             <div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
                 <div className="homeHero">
-                    <h1 className="heroText home"><Link to="/home">Big Bottom Big Board</Link></h1>
+                    <div style={{ paddingTop: "160px" }}>
+                        <h1 className="heroTextHome home">Big Bottom Big Board</h1>
+                        <h2 style={{ color: "white", marginTop: "20px" }}>Where we collaborate on the Big Bottom Festival</h2>
+                    </div>
                 </div>
             </div>
+            <HomeLogout />
             <h1>{userName}'s profile</h1>
             <p>{ideas.ideaLikes}</p>
-
-            {/* <IdeasAdd /> */}
             <div className="homeListContainer">
+                <h4 style={{ textAlign: "center", marginBottom: "30px" }}>Ideas posted: {ideas.length}</h4>
+
                 {
                     ideas.map((profile, index) => {
                         return (
                             <div key={index}>
-                                <div className="postText">{profile.ideaName}</div>
+                                <div className="listContainerHome">
+                                    <p style={{ fontSize: "14px", textAlign: "center" }}>{profile.createdAt}</p>
+                                    <div className="postText">{profile.ideaName}</div>
+                                    <div className="likeButtonContainer">
+
+                                        <LikeButton
+                                            user={user}
+                                            idea={profile}
+                                            ideas={ideas}
+                                            setIdeas={setIdeas}
+
+                                        />
 
 
-                                <div className="likeButton">
-                                    <Button onClick={() => likeIdea(ideas._id, user.userName)}>Like idea</Button>
+                                        <div className="likeButtonLikes">
+
+                                            <div className="likedByText">Liked By: {profile.ideaLikes.join(", ")}</div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <p>{profile.createdAt}</p>
-                                <p>{profile.createdBy.userEmail}</p>
+                                <div>
+                                    <Delete
+                                        user={user}
+                                        idea={profile}
+                                        ideas={ideas}
+                                        setIdeas={setIdeas}
+                                    />
 
-
-                                <p>{profile.ideaLikes}</p>
-                                <p>Likes of post: {profile.ideaLikes.length}</p>
-                                <p>Ideas posted: {ideas.length}</p>
+                                </div>
                             </div>
                         )
                     }
                     )
                 }
-                <div style={{ marginBottom: "40px", textAlign: "center" }}>
-                    <Link to="/home">Home</Link>  |  <Link to="logout">Log out</Link>
-                </div>
-            </div></div>
+
+            </div>
+
+        </div>
 
     )
 

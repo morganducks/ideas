@@ -7,6 +7,7 @@ import Profile from "./components/Profile"
 import OneIdea from "./components/OneIdea"
 import Delete from "./components/Delete"
 import LogReg from "./views/LogReg"
+import LikeButton from "./components/LikeButton"
 import io from 'socket.io-client';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -37,8 +38,6 @@ function App() {
             setIdeas={setIdeas}
             user={user}
             setUser={setUser}
-            replyList={replyList}
-            setReplyList={setReplyList}
             ideaLikes={ideaLikes}
             setIdeaLikes={setIdeaLikes}
             socket={socket}
@@ -56,12 +55,6 @@ function App() {
             setIdeas={setIdeas}
             user={user}
             setUser={setUser}
-            // replyList={replyList}
-            // setReplyList={setReplyList}
-            ideaLikes={ideaLikes}
-            setIdeaLikes={setIdeaLikes}
-            // ideaLikesForUser={ideaLikesForUser}
-            // setIdeaLikesForUser={setIdeaLikesForUser}
           />} path="/user/profile/:userName"
           />
 
@@ -69,24 +62,17 @@ function App() {
             socket={socket}
             ideas={ideas}
             setIdeas={setIdeas}
-            replyList={replyList}
-            setReplyList={setReplyList}
             user={user}
             setUser={setUser}
           />} path="/ideas/:id" />
 
 <Route element={<Delete
-            ideas={ideas}
-            setIdeas={setIdeas}
-            user={user}
-            setUser={setUser}
-            // replyList={replyList}
-            // setReplyList={setReplyList}
-            // ideaLikes={ideaLikes}
-            // setIdeaLikes={setIdeaLikes}
-            // ideaLikesForUser={ideaLikesForUser}
-            // setIdeaLikesForUser={setIdeaLikesForUser}
-          />} path="/user/profile/:userName"
+          />}
+          />
+
+<Route element={<LikeButton
+
+          />}
           />
         </Routes>
       </div>

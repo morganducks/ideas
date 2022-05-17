@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Idea = require('../models/idea.model');
 const User = require('../models/user.model')
-const Likes = require('../models/likes.model')
+
 
 module.exports = {
 
@@ -49,7 +49,7 @@ findIdeasByUser: (req, res) => {
         User.findOne({userName: req.params.userName})
         .then((userNotLoggedIn)=> {
             Idea.find({createdBy: userNotLoggedIn._id})
-                .populate("createdBy", "userName")
+                .populate("createdBy", "userName userEmail")
                 // .populate("ideas", "ideaLikes")
                 .populate("replies", "content _id likes")
                 .then((ideasFromUser) => {
@@ -99,6 +99,7 @@ deleteIdea: (req, res) => {
             req.body,
             { new: true, runValidators: true }
             )
+            .populate("createdBy", "userName userEmail")
             .then((updateIdea) => {
                 res.json(updateIdea);
                 console.log(updateIdea);

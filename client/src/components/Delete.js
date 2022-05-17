@@ -1,39 +1,47 @@
 
 //axios, useEffect, useState, Link
 import React, { useEffect, useState } from "react";
+import {  useParams } from 'react-router-dom'
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom"
+import Button from 'react-bootstrap/Button';
 
 const Delete = (props) => {
-    const { user, setUser } = props;
+    const { user } = props;
+    const { idea } = props;
+    const { id } = useParams();
+    const { ideas, setIdeas } = props;
 
-    useEffect(() => {
-        axios.get(`http://localhost:8000/api/user/`,
-            { withCredentials: true }
-        )
-            .then((res) => {
-                console.log(res.data);
-                setUser(res.data)
-                console.log(user.userName + " user pull")
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }, [])
 
-    const deleteIdea = (idFromBelow) => {
+
+    const deleteIdea = () => {
         // check for idea want to delete to make sure the current user createdBy
-        axios.delete(`http://localhost:8000/api/users/${idFromBelow}`)
+        axios.delete(`http://localhost:8000/api/ideas/${idea._id}`,
+        { withCredentials: true }
+    )
             .then((res) => {
                 console.log(res.data);
-                setUser(user.filter(user => user._id !== idFromBelow))
+                // going to return the new idea list without the deleted idea
+                const newIdeaList = ideas.filter(v => {
+                    return(v._id !== idea._id) 
+                })
+                   
+                setIdeas(newIdeaList);
+                // (idea.filter(idea => idea.createdBy?._id !== idFromBelow))
             })
             .catch((err) => { console.log(err) });
     }
 
-    return (
-        <button className="mainButton" onClick={() => deleteIdea(user.createdBy?._id)}>Delete</button>
-    )
+    if(idea.createdBy._id === user._id) {
+        return(
+            <Button className="deleteButton" onClick={ deleteIdea }>Delete your idea</Button>
+        )
+    }
+
+    // return (
+       
+    //     <button className="mainButton" onClick={() => deleteIdea(idea.createdBy?._id)}>Delete</button>
+       
+    // )
 
 }
 

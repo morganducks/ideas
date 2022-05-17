@@ -94,6 +94,7 @@ module.exports = {
     findUsers: (req, res) => {
         User.find()
         .populate("replies", "content _id likes")
+        .populate("userEmail")
             .then((allUsers) => {
                 res.json(allUsers);
             })
@@ -111,6 +112,7 @@ updateUserLikes: (req, res) => {
         )
         .populate("replies", "content _id likes")
         .populate("ideaLikes")
+
         .then((updateUser) => {
             res.json(updateUser);
             console.log(updateUser);

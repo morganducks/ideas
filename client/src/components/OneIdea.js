@@ -2,8 +2,10 @@
 //axios, useEffect, useState, Link
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom"
-
+import { useParams } from "react-router-dom"
+import HomeLogout from "../components/HomeLogout"
+import LikeButton from "../components/LikeButton"
+import Button from 'react-bootstrap/Button';
 
 
 const OneIdea = (props) => {
@@ -11,38 +13,89 @@ const OneIdea = (props) => {
     // const { socket } = props;
     const { ideas, setIdeas } = props;
     const [oneIdea, setOneIdea] = useState({});
-    const { user, setUser } = props;
+    const { user } = props;
     const { id } = useParams();
 
-    useEffect(() => {
-        axios.get(`http://localhost:8000/api/user/`,
-            { withCredentials: true }
-        )
-            .then((res) => {
-                console.log(res.data);
-                setUser(res.data)
-                // console.log(user.userName + " user pull")
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }, [])
 
 
     //async
     //can use map on array, cannot map object
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/ideas/${id}`)
+        axios.get(`http://localhost:8000/api/ideas/${id}`,
+        { withCredentials: true })
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                setOneIdea(res.data);
-            })
+               setOneIdea(res.data);
+           })
             .catch((err) => {
                 console.log(err)
                 console.log("fail")
             })
     }, [id])
+
+
+  
+    return (
+<div>
+        <div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
+        <div className="homeHero">
+            <div style={{ paddingTop: "160px" }}>
+                <h1 className="heroTextHome home">Big Bottom Big Board</h1>
+                <h2 style={{ color: "white", marginTop: "20px" }}>Where we collaborate on the Big Bottom Festival</h2>
+            </div>
+        </div>
+    </div>
+            <div className="homeListContainer">
+            <div className="userTextOneIdea">Posted by {oneIdea.createdBy?.userName}</div>
+            <p>{oneIdea.createdAt}</p>
+            <div className="postText">{oneIdea.ideaName}</div>
+            {/* 
+<div style={{marginTop:"20px"}}>
+                    <LikeButton
+                        user={user}
+                            idea={whoHasLiked}
+                            ideas={ideas}
+                            setIdeas={setIdeas}
+ 
+/>
+</div>*/}
+
+<h3 style={{ marginTop: "40px", paddingTop: "40px", borderTop:"1px solid black"}}>People who have liked this post</h3>
+
+            {
+                oneIdea?.ideaLikes?.map((whoHasLiked, index) => {
+                    return(
+                    <div className="profileMainLikesSection" key={index}>
+                        
+                        <div className="profileLikesSection">
+                        <div className="profileLikes">
+                        <p style={{ fontSize:"18px", marginTop:"10px", fontWeight: "700" }}>{whoHasLiked} </p>
+                        </div>
+                        <div className="profileLikesButton">
+
+                        <Button href={`/user/profile/${whoHasLiked}`}>See profile</Button> 
+                        </div>
+                    </div>
+                    </div>
+                 
+                    )
+                }
+                )
+}
+
+
+        </div>
+        <div style={{marginTop:"60px", borderTop:"1px solid black", paddingBottom:"60px", marginBottom:"50px"}}>
+<HomeLogout/>
+</div>
+</div>
+
+
+
+    )
+}
+
+export default OneIdea;
+
 
 
     //from course code
@@ -109,41 +162,3 @@ const OneIdea = (props) => {
 
 
     //   console.log(userMap)
-
-
-    return (
-        <div>
-<div style={{ marginTop: "0px", marginBottom: "40px", zIndex: "0" }}>
-                <div className="homeHero">
-                    <h1 className="heroText home"><Link to="/home">Big Bottom Big Board</Link></h1>
-                </div>
-            </div>
-            <div className="homeListContainer">
-            <div className="userText">Posts by {oneIdea.createdBy?.userName}</div>
-            <div className="postText">{oneIdea.ideaName}</div>
-            
-            <p>{oneIdea.createdAt}</p>
-            <p>{oneIdea?.ideaLikes?.length}</p>
-            {
-                oneIdea?.ideaLikes?.map((likes, index) => {
-                    return(
-                    <div key={index}>
-                        <p><Link to={`/user/profile/${likes}`}>{likes}</Link></p>
-                        <p>{likes.name}</p>
-                    </div>
-                    )
-                }
-                )
-}
-        </div>
-        <div style={{marginBottom: "40px", textAlign: "center"}}>
-                <Link to="/home">Home</Link>  |  <Link to="logout">Log out</Link>
-                </div>
-        </div>
-
-
-
-    )
-}
-
-export default OneIdea;
